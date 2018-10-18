@@ -22,3 +22,8 @@ times = []
 currencies = ["BTC"]
 #Prices and their prices stored in a array in a dictionary.
 prices = {"BTC": []}
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
