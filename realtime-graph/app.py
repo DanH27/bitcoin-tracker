@@ -44,9 +44,13 @@ def retrieve_data():
     #Get amount of the currency
     response = json.loads(requests.get(api_url).content)
 
+    #Iterate through the currencies
     for currency in currencies:
+        #Price is equal to python dictionary response, currency name, USD value
         price = response[currency]['USD']
+        #Set currency name as key, and price as value in current_prices for specified currency
         current_prices[currency] = price
+        #Set prices key as currencyname and append price to list
         prices[currency].append(price)
 
     graph_data = [go.Scatter(
@@ -62,25 +66,25 @@ def retrieve_data():
     )]
 
     data = {
-        'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEcoder),
-        'bar_chart': json.dumps(list(bar_chart_data), cls=plotly.utils.PlotlyJSONEcoder)
+        'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder),
+        'bar_chart': json.dumps(list(bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)
     }
 
     #Trigger pusher event
     pusher.trigger("crypto", "data-updated", data)
 
-    # create schedule for retrieving prices
-    scheduler = BackgroundScheduler()
-    scheduler.start()
-    scheduler.add_job(
-        func=retrieve_data,
-        trigger = IntervalTrigger(seconds=10),
-        id='prices_retrieval_job',
-        name='Retrieve prices every 10 seconds',
-        replace_existing = True
+# create schedule for retrieving prices
+scheduler = BackgroundScheduler()
+scheduler.start()
+scheduler.add_job(
+    func=retrieve_data,
+    trigger = IntervalTrigger(seconds=10),
+    id='prices_retrieval_job',
+    name='Retrieve prices every 10 seconds',
+    replace_existing = True
     )
 
-    # Shut down the scheduler when exiting the app
-    atexit.register(lambda: scheduler.shutdown())
+        # Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
 
-    app.run(debug=True, use_reloader=False)
+app.run(debug=True, use_reloader=False)
