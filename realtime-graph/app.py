@@ -16,12 +16,13 @@ pusher = Pusher(
         ssl=True
 )
 
+hello = "Hello world!"
 #Array of times
 times = []
 #The name of currencies stored in an array
-currencies = ["BTC"]
+currencies = ["BTC", "ETH", "LTC"]
 #Prices and their prices stored in a array in a dictionary.
-prices = {"BTC": []}
+prices = {"BTC": [], "ETH": [], "LTC": []}
 
 
 @app.route("/")
@@ -57,7 +58,7 @@ def retrieve_data():
         x=times,
         y=prices.get(currency),
         name="{} Prices".format(currency)
-    ) for current in currencies]
+    ) for currency in currencies]
 
     # create an array of traces for bar chart data
     bar_chart_data = [go.Bar(
@@ -73,6 +74,32 @@ def retrieve_data():
     #Trigger pusher event
     pusher.trigger("crypto", "data-updated", data)
 
+#Get yearly data for cryptocoins
+def yearly_data():
+    monthly_keys = []
+    monthly_btc_values = []
+
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=demo"
+    #Get amount of the currency
+    my_response = json.loads(requests.get(api_url).content)
+    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
+        monthly_keys.append(month)
+
+    for month in monthly_keys:
+        monthly_btc_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
+
+
+    btc_bar_chart_data = [go.Bar(
+        x=monthly_keys,
+        y=monthly_btc_values
+    )]
+
+    monthly_btc_data = {'btc_month_bar': json.dumps(list(btc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
+    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
+    pusher.trigger("crypto", "month-updated", monthly_btc_data)
+
+
+
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -84,7 +111,9 @@ scheduler.add_job(
     replace_existing = True
     )
 
-        # Shut down the scheduler when exiting the app
+yearly_data()
+# Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
+
 
 app.run(debug=True, use_reloader=False)
