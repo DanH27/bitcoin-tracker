@@ -79,7 +79,7 @@ def yearly_data():
     monthly_keys = []
     monthly_btc_values = []
 
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=demo"
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey={key}"
     #Get amount of the currency
     my_response = json.loads(requests.get(api_url).content)
     for month in my_response['Time Series (Digital Currency Monthly)'].keys():
@@ -98,6 +98,53 @@ def yearly_data():
     #print(my_response['Time Series (Digital Currency Monthly)'].keys())
     pusher.trigger("crypto", "month-updated", monthly_btc_data)
 
+#Get litecoin by month
+def monthly_ltc_data():
+    monthly_keys = []
+    monthly_ltc_values = []
+
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=LTC&market=CNY&apikey={key}"
+    #Get amount of the currency
+    my_response = json.loads(requests.get(api_url).content)
+    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
+        monthly_keys.append(month)
+
+    for month in monthly_keys:
+        monthly_ltc_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
+
+
+    ltc_bar_chart_data = [go.Bar(
+        x=monthly_keys,
+        y=monthly_ltc_values
+    )]
+
+    monthly_ltc_data = {'ltc_month_bar': json.dumps(list(ltc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
+    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
+    pusher.trigger("crypto", "ltc-month-updated", monthly_ltc_data)
+
+#Get ethereium by month
+def monthly_eth_data():
+    monthly_keys = []
+    monthly_eth_values = []
+
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=ETH&market=CNY&apikey={key}"
+    #Get amount of the currency
+    my_response = json.loads(requests.get(api_url).content)
+    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
+        monthly_keys.append(month)
+
+    for month in monthly_keys:
+        monthly_eth_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
+
+
+    eth_bar_chart_data = [go.Bar(
+        x=monthly_keys,
+        y=monthly_eth_values
+    )]
+
+    monthly_eth_data = {'eth_month_bar': json.dumps(list(eth_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
+    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
+    pusher.trigger("crypto", "eth-month-updated", monthly_eth_data)
 
 
 # create schedule for retrieving prices
@@ -112,6 +159,8 @@ scheduler.add_job(
     )
 
 yearly_data()
+monthly_ltc_data()
+monthly_eth_data()
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
 
