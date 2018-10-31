@@ -147,6 +147,11 @@ def monthly_eth_data():
     pusher.trigger("crypto", "eth-month-updated", monthly_eth_data)
 
 
+@app.route("/btc")
+def btc_dash():
+    yearly_data()
+    return render_template("individual.html", hello="sdfs")
+
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -158,8 +163,7 @@ scheduler.add_job(
     replace_existing = True
     )
 
-yearly_data()
-monthly_ltc_data()
+#yearly_data()
 monthly_eth_data()
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
