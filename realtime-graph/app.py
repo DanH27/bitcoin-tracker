@@ -79,7 +79,7 @@ def yearly_data():
     monthly_keys = []
     monthly_btc_values = []
 
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey={key}"
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=JQ5OZI602IGDD72C"
     #Get amount of the currency
     my_response = json.loads(requests.get(api_url).content)
     for month in my_response['Time Series (Digital Currency Monthly)'].keys():
@@ -96,14 +96,17 @@ def yearly_data():
 
     monthly_btc_data = {'btc_month_bar': json.dumps(list(btc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
     #print(my_response['Time Series (Digital Currency Monthly)'].keys())
+
+    #Trigger every month
     pusher.trigger("crypto", "month-updated", monthly_btc_data)
+
 
 #Get litecoin by month
 def monthly_ltc_data():
     monthly_keys = []
     monthly_ltc_values = []
 
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=LTC&market=CNY&apikey={key}"
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=LTC&market=CNY&apikey=JQ5OZI602IGDD72C"
     #Get amount of the currency
     my_response = json.loads(requests.get(api_url).content)
     for month in my_response['Time Series (Digital Currency Monthly)'].keys():
@@ -127,7 +130,7 @@ def monthly_eth_data():
     monthly_keys = []
     monthly_eth_values = []
 
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=ETH&market=CNY&apikey={key}"
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=ETH&market=CNY&apikey=JQ5OZI602IGDD72C"
     #Get amount of the currency
     my_response = json.loads(requests.get(api_url).content)
     for month in my_response['Time Series (Digital Currency Monthly)'].keys():
@@ -150,7 +153,7 @@ def monthly_eth_data():
 @app.route("/btc")
 def btc_dash():
     yearly_data()
-    return render_template("individual.html", hello="sdfs")
+    return render_template("individual.html", data="sdfs")
 
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
@@ -163,7 +166,7 @@ scheduler.add_job(
     replace_existing = True
     )
 
-#yearly_data()
+yearly_data()
 monthly_eth_data()
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
