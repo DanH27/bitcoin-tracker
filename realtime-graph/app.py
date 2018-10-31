@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from pusher import Pusher
+from flask import request
 import requests, json, atexit, time, plotly, plotly.graph_objs as go
 
 app = Flask(__name__)
@@ -25,8 +26,11 @@ currencies = ["BTC", "ETH", "LTC"]
 prices = {"BTC": [], "ETH": [], "LTC": []}
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        currencies.append("ADA")
+        prices["ADA"] = []
     return render_template("index.html")
 
 def retrieve_data():
@@ -75,6 +79,33 @@ def retrieve_data():
     pusher.trigger("crypto", "data-updated", data)
 
 #Get yearly data for cryptocoins
+###########TEST#################################'2b. high (USD)'
+def yearly_data1(c_info, c_name):
+    monthly_keys = []
+    monthly_btc_values = []
+
+    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol={}&market=CNY&apikey=JQ5OZI602IGDD72C".format(str(c_name))
+    #Get amount of the currency
+    my_response = json.loads(requests.get(api_url).content)
+    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
+        monthly_keys.append(month)
+
+    for month in monthly_keys:
+        monthly_btc_values.append(my_response['Time Series (Digital Currency Monthly)'][month][str(c_info)])
+
+
+    btc_bar_chart_data = [go.Bar(
+        x=monthly_keys,
+        y=monthly_btc_values
+    )]
+
+    monthly_btc_data = {'btc_month_bar': json.dumps(list(btc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
+
+    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
+
+    #Trigger every month
+    pusher.trigger("crypto", "month-updated", monthly_btc_data)
+
 def yearly_data():
     monthly_keys = []
     monthly_btc_values = []
@@ -152,7 +183,7 @@ def monthly_eth_data():
 
 @app.route("/btc")
 def btc_dash():
-    yearly_data()
+#    yearly_data1('2b. high (USD)', 'BTC')
     return render_template("individual.html", data="sdfs")
 
 # create schedule for retrieving prices
@@ -166,7 +197,7 @@ scheduler.add_job(
     replace_existing = True
     )
 
-yearly_data()
+# yearly_data1('2b. high (USD)', 'BTC')
 monthly_eth_data()
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
