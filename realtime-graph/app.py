@@ -1,5 +1,8 @@
 #app.py
-from flask import Flask, render_template
+from datetime import datetime
+from flask import Flask, render_template, url_for, flash, redirect
+from flask_sqlalchemy import SQLAlchemy
+from forms import RegistrationForm, LoginForm
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from pusher import Pusher
@@ -7,6 +10,33 @@ from flask import request
 import requests, json, atexit, time, plotly, plotly.graph_objs as go
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'f9fc238959f76fa032a7294936fcd953'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    currency = db.relationship('Currency', backref='owner', lazy=True)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Currency(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    btc = db.Column(db.Integer(), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Currency('{self.btc}', '{self.date_posted}'"
+
 
 # configure pusher object
 pusher = Pusher(
@@ -26,12 +56,19 @@ currencies = ["BTC", "ETH", "LTC"]
 prices = {"BTC": [], "ETH": [], "LTC": []}
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
 def index():
-    if request.method == 'POST':
-        currencies.append("ADA")
-        prices["ADA"] = []
+    # if request.method == 'POST':
+    #     currencies.append("ADA")
+    #     prices["ADA"] = []
     return render_template("index.html")
+
+@app.route('/', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processed_text = text.upper()
+    print(processed_text)
+    return processed_text
 
 def retrieve_data():
     #Create a dictionary of current Prices
@@ -40,7 +77,7 @@ def retrieve_data():
     for currency in currencies:
         current_prices[currency] = []
         ##Debug - print current_prices dictionary
-        print(current_prices)
+        #print(current_prices)
 
     times.append(time.strftime('%H:%M:%S'))
 
@@ -186,9 +223,24 @@ def btc_dash():
 #    yearly_data1('2b. high (USD)', 'BTC')
     return render_template("individual.html", data="sdfs")
 
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!')
+    return render_template('register.html', title='Register', form=form)
+
+@app.route("/login")
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
+
+
+
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
-scheduler.start()
+#scheduler.start()
 scheduler.add_job(
     func=retrieve_data,
     trigger = IntervalTrigger(seconds=10),
