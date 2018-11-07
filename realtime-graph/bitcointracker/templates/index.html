@@ -31,11 +31,8 @@
                 </div>
             </div>
 
-            <form method="POST">
-    <input name="text">
-    <input type="submit">
-    <button id="submit"></button>
-</form>
+
+
 
             <!-- <div class="column">
                 <h5 class="title is-6">Monthly BTC</h5>
@@ -50,27 +47,26 @@
         </div>
     </div>
 </section>
-<section>
-  <div class="container">
-    <div class="columns">
-
+<section class="section">
+    <div class="container">
       <div class="column">
-        <h5 class="title is-6">Monthly LTC</h5>
-        <div id="monthly_ltc_bar" class="chart">
-          LTC Monthly Bar Chart (2014 - 2018)
-        </div>
+          <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
+          <h1 class="title is-6" id="m_left">{{moneyLeft}}</h1>
       </div>
 
-      <div class="column">
-        <h5 class="title is-6">Monthly ETH</h5>
-        <div id="monthly_eth_bar" class="chart">
-          LTC Monthly Bar Chart (2014 - 2018)
-        </div>
-      </div>
+
+      <form name="text" method="POST" action="/form">
+          <input name="comp_select">
+          <input type="submit" value="Buy">
+      </form>
+
+
+
+
+
 
     </div>
-  </div>
-</section>
+  </section>
 
 
 
@@ -91,11 +87,15 @@
       // subscribe to crypto channel
       const channel = pusher.subscribe('crypto')
       // listen for relevant events
+
       channel.bind('data-updated', data => {
           const graph = JSON.parse(data.graph);
           Plotly.newPlot('price_chart', graph);
           const bar_chart = JSON.parse(data.bar_chart);
           Plotly.newPlot('market_cap_chart', bar_chart);
+          document.getElementById('b_price').innerHTML = "Current Price: " + data.btc_price;
+          document.getElementById('m_left').innerHTML = "Budget: " + data.money_left;
+
 
 
       });
@@ -117,25 +117,31 @@
 
       });
 
-      $(document).ready( function() {
-        $('#submit').click(function() {
-           var formdata = serialize();
-           $.ajax({
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formdata),
-                dataType: 'json',
-                url: 'http://http://127.0.0.1:5000/',
-                success: function (e) {
-                    console.log("HEY");
-                    window.location = "http://http://127.0.0.1:5000/btc";
-                },
-                error: function(error) {
-                  console.log(error);
-            }
-            });
-        });
-  });
+
+
+  //     $(document).ready(function() {
+  //       $('#submit').click(function(event) {
+  //         event.preventDefault()
+  //          //var formdata = $("#bought").serialize();
+  //          //var value = $("#bought").val();
+  //          //console.log(value);
+  //          $.ajax({
+  //               type: 'POST',
+  //               contentType: 'application/json',
+  //               data: "",
+  //               dataType: 'json',
+  //               url: 'http://127.0.0.1:5000/',
+  //               success: function (e) {
+  //                   //document.getElementById('m_left').innerHTML = {{moneyLeft}} - {{bitcoinprice}};
+  //                   window.location.replace("http://127.0.0.1:5000/form")
+  //               },
+  //               error: function(error) {
+  //                 console.log(error);
+  //           }
+  //           });
+  //       });
+  // });
+
 
     </script>
 </body>
