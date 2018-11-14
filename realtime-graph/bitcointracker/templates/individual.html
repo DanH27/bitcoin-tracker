@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CryptoLiveChart!</title>
+    <title>Crypto Graphs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <style>
         .chart {
@@ -32,11 +32,14 @@
             </div> -->
 
             <div class="column">
-                <h5 class="title is-6">Monthly BTC</h5>
-                <div id="monthly_btc_bar" class="chart">
+                <h5 class="title is-6">Cryptocurrencies</h5>
+                <div id="price_chart" class="chart">
                     BTC Monthly Bar Chart (2014 - 2018) {{hello}}
                 </div>
             </div>
+            <p>
+              Click on Cryptocurrency name to temporarily disabile it. You can renable it by clicking it again.
+            </p>
 
 
 
@@ -64,20 +67,20 @@
       });
       // subscribe to crypto channel
       const channel = pusher.subscribe('crypto')
-      // listen for relevant events
-      // channel.bind('data-updated', data => {
-      //     const graph = JSON.parse(data.graph);
-      //     Plotly.newPlot('price_chart', graph);
-      //     const bar_chart = JSON.parse(data.bar_chart);
-      //     Plotly.newPlot('market_cap_chart', bar_chart);
-      //
-      //
-      // });
-      channel.bind('month-updated', data => {
-          const btc_month = JSON.parse(data.btc_month_bar);
-          Plotly.newPlot('monthly_btc_bar', btc_month);
+      //listen for relevant events
+      channel.bind('data-updated', data => {
+          const graph = JSON.parse(data.graph);
+          Plotly.newPlot('price_chart', graph);
+        //  const bar_chart = JSON.parse(data.bar_chart);
+        //  Plotly.newPlot('market_cap_chart', bar_chart);
+
 
       });
+      // channel.bind('month-updated', data => {
+      //     const btc_month = JSON.parse(data.btc_month_bar);
+      //     Plotly.newPlot('monthly_btc_bar', btc_month);
+      //
+      // });
 
       // channel.bind('ltc-month-updated', data => {
       //     const ltc_month = JSON.parse(data.ltc_month_bar);

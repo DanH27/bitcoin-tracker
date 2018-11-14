@@ -1,80 +1,49 @@
-<!-- ./templates/index.html -->
+<!-- ./templates/currencies.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CryptoLiveChart!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
     <style>
-        .chart {
-            height: 800px;
-        }
+      #cc-table {
+          margin: 0 auto;
+          width: 100%;
+      }
+      #cc-table td {
+        text-align: center;
+        padding: 2px;
+      }
+      #cc-table th {
+        padding-bottom: 30px;
+      }
+      #cc-table tr:hover {
+        color: red;
+      }
+
     </style>
+
 </head>
 <body>
-<section class="section">
-    <div class="container">
-        <!-- <h1 class="title">Welcome to <strong>Crypto</strong>LiveChart!</h1>
-        <p class="subtitle">View live prices for <strong>Bitcoin</strong> and <strong>Ethereum</strong> in real time!</p> -->
-        <hr>
-        <div class="columns">
-            <div class="column">
-                <h5 class="title is-6">Prices (in USD)</h5>
-                <div id="price_chart" class="chart">
-                    Graph
-                </div>
-            </div>
-            <div class="column">
-                <h5 class="title is-6">Market Cap</h5>
-                <div id="market_cap_chart" class="chart">
-                    Bar Chart
-                </div>
-            </div>
 
 
-
-
-            <!-- <div class="column">
-                <h5 class="title is-6">Monthly BTC</h5>
-                <div id="monthly_btc_bar" class="chart">
-                    BTC Monthly Bar Chart (2014 - 2018)
-                </div>
-            </div> -->
-
-
-
-
-        </div>
-    </div>
-</section>
-<section class="section">
-    <div class="container">
-      <div class="column">
           <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
           <h1>CASH:</h1>
           <h1 class="title is-6" id="m_left">{{moneyLeft}}</h1>
-      </div>
 
 
-      <form name="text" method="POST" action="/form">
+
+      <!-- <form name="text" method="POST" action="/form">
           <input name="comp_select">
           <input type="submit" value="Buy">
-      </form>
+      </form> -->
 
 
-
-
-
-
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      <div class="column">
+    <div class="table-background">
         <h1>PICK A CRYPTOCURRENCY TO BUY.</h1>
         <h1>SELECT A CRYPTOCURRENCY</h1>
-        <table>
+        <table id="cc-table">
           <th>
             STOCK
           </th>
@@ -118,10 +87,7 @@
             </td>
           </tr>
         </table>
-      </div>
     </div>
-
-  </section>
 
 
 
@@ -144,10 +110,6 @@
       // listen for relevant events
 
       channel.bind('data-updated', data => {
-          const graph = JSON.parse(data.graph);
-          Plotly.newPlot('price_chart', graph);
-          const bar_chart = JSON.parse(data.bar_chart);
-          Plotly.newPlot('market_cap_chart', bar_chart);
           document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
           document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
           document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;

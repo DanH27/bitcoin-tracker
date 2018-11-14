@@ -30,9 +30,9 @@ currentBudget = 0
 #Array of times
 times = []
 #The name of currencies stored in an array
-currencies = ["BTC"]
+currencies = ["BTC", "LTC", "DOGE"]
 #Prices and their prices stored in a array in a dictionary.
-prices = {"BTC": []}
+prices = {"BTC": [], "LTC": [], "DOGE": []}
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -95,12 +95,16 @@ def retrieve_data():
     )]
 
     bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
+    litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
+    dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
 
     data = {
         'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder),
         'bar_chart': json.dumps(list(bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder),
         'btc_price': bitcoinprice,
-        'money_left': moneyLeft
+        'money_left': moneyLeft,
+        'ltc_price': litcoinprice,
+        'doge_price': dogecoinprice
     }
 
     #Trigger pusher event
@@ -227,7 +231,9 @@ def login():
     form = LoginForm()
     return render_template('login.html', title='Login', form=form)
 
-
+@app.route("/currencies")
+def ctable():
+    return render_template('currencies.html', title="currencies")
 
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
