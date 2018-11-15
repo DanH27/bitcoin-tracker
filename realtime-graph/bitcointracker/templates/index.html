@@ -145,7 +145,7 @@
 
       channel.bind('data-updated', data => {
           const graph = JSON.parse(data.graph);
-          Plotly.newPlot('price_chart', graph);
+          Plotly.newPlot('price_chart', graph, {showLink: false});
           const bar_chart = JSON.parse(data.bar_chart);
           Plotly.newPlot('market_cap_chart', bar_chart);
           document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;

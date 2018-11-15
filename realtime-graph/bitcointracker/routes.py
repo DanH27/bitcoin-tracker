@@ -30,9 +30,11 @@ currentBudget = 0
 #Array of times
 times = []
 #The name of currencies stored in an array
-currencies = ["BTC", "LTC", "DOGE"]
+currencies = ["BCN", "BTC", "LTC", "NMC", "DOGE", "PPC", "FTC", "GRC", "XPM", "AUR" ,"MZC", "POT", "XLM", "ETH"]
 #Prices and their prices stored in a array in a dictionary.
-prices = {"BTC": [], "LTC": [], "DOGE": []}
+prices = {"BCN": [], "BTC": [], "LTC": [], "DOGE": [], "NMC": [],
+"PPC": [], "FTC": [], "GRC": [], "XPM": [], "AUR": [],
+"MZC": [], "POT": [], "XLM": [], "ETH": []}
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -97,6 +99,18 @@ def retrieve_data():
     bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
     litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
     dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
+    nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
+    bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
+    peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
+    feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
+    gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
+    xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
+    auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
+    mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
+    potcoinprice = prices["POT"][len(prices["POT"]) - 1]
+    stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
+    ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
+
 
     data = {
         'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder),
@@ -104,7 +118,18 @@ def retrieve_data():
         'btc_price': bitcoinprice,
         'money_left': moneyLeft,
         'ltc_price': litcoinprice,
-        'doge_price': dogecoinprice
+        'doge_price': dogecoinprice,
+        'nmc_price': nmcprice,
+        'bcn_price': bytecoinprice,
+        'ppc_price': peercoinprice,
+        'ftc_price': feathercoinprice,
+        'grc_price': gridcoinprice,
+        'xpm_price': xpmcoinprice,
+        'aur_price': auroracoinprice,
+        'mzc_price': mazacoinprice,
+        'pot_price': potcoinprice,
+        'xlm_price': stellarcoinprice,
+        'eth_price': ethereiumcoinprice
     }
 
     #Trigger pusher event

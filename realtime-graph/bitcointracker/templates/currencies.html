@@ -13,7 +13,7 @@
       }
       #cc-table td {
         text-align: center;
-        padding: 2px;
+        padding: 10px;
       }
       #cc-table th {
         padding-bottom: 30px;
@@ -53,6 +53,19 @@
           <th>
             # COINS OWNED
           </th>
+
+          <!-- Aurora Table Info -->
+          <tr>
+            <td id="aurora-table-name">
+              AURORACOIN (AUR)
+            </td>
+            <td id="aurora-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
           <!-- Bitcoin Table Info -->
           <tr>
             <td id="bitcoin-table-name">
@@ -64,6 +77,19 @@
               0
             </td>
           </tr>
+
+          <!-- ByteCoin Table Info -->
+          <tr>
+            <td id="bytecoin-table-name">
+              BYTECOIN (BCN)
+            </td>
+            <td id="bytecoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
           <!-- DOGE Table Info -->
           <tr>
             <td id="dogecoin-table-name">
@@ -75,6 +101,43 @@
               0
             </td>
           </tr>
+
+          <!-- Ethereium Table Info -->
+          <tr>
+            <td id="ethereium-table-name">
+              ETHEREIUM (ETC)
+            </td>
+            <td id="ethereium-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+          <!-- Feathercoin Table Info -->
+          <tr>
+            <td id="feathercoin-table-name">
+              FEATHERCOIN (FTC)
+            </td>
+            <td id="feathercoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+          <!-- Gridcoin Table Info -->
+          <tr>
+            <td id="gridcoin-table-name">
+              GRIDCOIN (GRC)
+            </td>
+            <td id="gridcoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
           <!-- Litecoin Table Info -->
           <tr>
             <td id="litecoin-table-name">
@@ -86,6 +149,87 @@
               0
             </td>
           </tr>
+
+          <!-- Mazacoin Table Info -->
+          <tr>
+            <td id="mazacoin-table-name">
+              MAZACOIN (MZC)
+            </td>
+            <td id="mazacoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+          <!-- Namecoin Table Info -->
+          <tr>
+            <td id="namecoin-table-name">
+              NAMECOIN (NMC)
+            </td>
+            <td id="namecoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+
+
+          <!-- Peercoin Table Info -->
+          <tr>
+            <td id="peercoin-table-name">
+              PEERCOIN (PPC)
+            </td>
+            <td id="peercoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+
+
+          <!-- Primecoin Table Info -->
+          <tr>
+            <td id="primecoin-table-name">
+              PRIMECOIN (XPM)
+            </td>
+            <td id="primecoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+
+
+          <!-- Potcoin Table Info -->
+          <tr>
+            <td id="potcoin-table-name">
+              POTCOIN (PTC)
+            </td>
+            <td id="potcoin-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+          <!-- Stellar Table Info -->
+          <tr>
+            <td id="stellar-table-name">
+              STELLAR (XLM)
+            </td>
+            <td id="stellar-table-price">
+            </td>
+            <td>
+              0
+            </td>
+          </tr>
+
+
+
         </table>
     </div>
 
@@ -114,6 +258,17 @@
           document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
           document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
           document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
+          document.getElementById('namecoin-table-price').innerHTML = "$" + data.nmc_price;
+          document.getElementById('bytecoin-table-price').innerHTML = "$" + data.bcn_price;
+          document.getElementById('peercoin-table-price').innerHTML = "$" + data.ppc_price;
+          document.getElementById('feathercoin-table-price').innerHTML = "$" + data.ftc_price;
+          document.getElementById('gridcoin-table-price').innerHTML = "$" + data.grc_price;
+          document.getElementById('primecoin-table-price').innerHTML = "$" + data.xpm_price;
+          document.getElementById('aurora-table-price').innerHTML = "$" + data.aur_price;
+          document.getElementById('mazacoin-table-price').innerHTML = "$" + data.mzc_price;
+          document.getElementById('potcoin-table-price').innerHTML = "$" + data.pot_price;
+          document.getElementById('stellar-table-price').innerHTML = "$" + data.xlm_price;
+          document.getElementById('ethereium-table-price').innerHTML = "$" + data.eth_price;
 
 
 
