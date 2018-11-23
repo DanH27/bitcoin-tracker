@@ -37,6 +37,7 @@ prices = {"BCN": [], "BTC": [], "LTC": [], "DOGE": [], "NMC": [],
 "MZC": [], "POT": [], "XLM": [], "ETH": []}
 
 
+
 @app.route("/", methods=['POST', 'GET'])
 def index():
 
@@ -256,18 +257,68 @@ def login():
     form = LoginForm()
     return render_template('login.html', title='Login', form=form)
 
-@app.route("/currencies")
+@app.route("/currencies", methods=['POST', 'GET'])
 def ctable():
-    return render_template('currencies.html', title="currencies")
+    if request.method == 'POST':
+        return "POSTED"
+    else:
+        return render_template('currencies.html', title="currencies")
+
+@app.route("/office")
+def office():
+    return render_template('office.html', title="Office")
+
+@app.route("/wallet")
+def wallet():
+    return render_template('wallet.html', title="Wallet")
+
+@app.route("/sell")
+def sell():
+    return render_template('sell-confirm.html', title="Sell")
+
+# Buy stocks from table
+@app.route('/buy', methods=['POST', 'GET'])
+def buy():
+    error_message = "NOT ENOUGH MONEY"
+    budget = 100000
+    print(request.form)
+    if 'buy_coins' in request.form:
+        amount = request.form.get('buy_coins')
+        coin_name = 'Bitcoin'
+        price = prices["BTC"][len(prices["BTC"]) - 1]
+        total_cost = int(amount) * price
+        if budget < total_cost:
+            return render_template('currencies.html', error_message=error_message)
+        else:
+            return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount)
+
+    budget = 100000
+    select = request.form.get('buy_coins')
+    #selected_coin = request.args.get('type')
+    #return "Buy a " + str(selected_coin) + "for " + str(prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1])
+    #price = prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1]
+    #return render_template('buy.html')
+    # bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
+    # if (budget - (int(bitcoinprice) * int(select)) >= 0):
+    #     return "<h1>Buy " + str(select) + " bitcoin(s) for "  + "$" + str(int(bitcoinprice) * int(select)) +"s?" + "</h1>" # just to see what select is
+    # else:
+    #     return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
+
+#Confirm you buying
+@app.route('/confirm', methods=['POST', 'GET'])
+def confirm():
+    select = request.form.get('confirm_buy')
+    return str(select)
+
 
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
 scheduler.start()
 scheduler.add_job(
     func=retrieve_data,
-    trigger = IntervalTrigger(seconds=10),
+    trigger = IntervalTrigger(seconds=60),
     id='prices_retrieval_job',
-    name='Retrieve prices every 10 seconds',
+    name='Retrieve prices every 60 seconds',
     replace_existing = True
     )
 

@@ -3,18 +3,18 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CryptoLiveChart!</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
         .chart {
             height: 800px;
         }
+        
     </style>
 </head>
 <body>
-<a href="/currencies">BUY CURRENCIES</a>
-<a href="/wallet">SELL CURRENCIES</a>
+<button>SELL</button>
 
 
     <!-- D3.js -->
@@ -32,8 +32,26 @@
         encrypted: true // optional
       });
       // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto')
+      const channel = pusher.subscribe('crypto');
       // listen for relevant events
+
+      channel.bind('data-updated', data => {
+          // const graph = JSON.parse(data.graph);
+          // Plotly.newPlot('price_chart', graph, {showLink: false});
+          // const bar_chart = JSON.parse(data.bar_chart);
+          // Plotly.newPlot('market_cap_chart', bar_chart);
+          // document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
+          // document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
+          // document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
+          // document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
+
+
+
+      });
+
+
+
+
 
 
     </script>

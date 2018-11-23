@@ -3,10 +3,22 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CryptoLiveChart!</title>
+    <title>BUY</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
     <style>
+
+    @font-face {
+      font-family: pix;
+      src: url(/static/NESFont.ttf);
+    }
+    body {
+      font-family: pix;
+    }
+    body {
+      background-color: #000000;
+      color: white;
+    }
       #cc-table {
           margin: 0 auto;
           width: 100%;
@@ -14,6 +26,7 @@
       #cc-table td {
         text-align: center;
         padding: 10px;
+        font-family: pix;
       }
       #cc-table th {
         padding-bottom: 30px;
@@ -21,6 +34,24 @@
       #cc-table tr:hover {
         color: red;
       }
+      form {
+        float: right;
+      }
+      select {
+        display: block;
+        margin-bottom: 15px;
+      }
+      table {
+        border: 10px solid #0000FC;
+        border-radius: 2%;
+      }
+      .table-form-cell {
+        display: inline-block;
+
+      }
+
+
+
 
     </style>
 
@@ -39,10 +70,13 @@
           <input type="submit" value="Buy">
       </form> -->
 
+      <p>{{error_message}}</p>
+
 
     <div class="table-background">
         <h1>PICK A CRYPTOCURRENCY TO BUY.</h1>
         <h1>SELECT A CRYPTOCURRENCY</h1>
+        <!-- <a href="{{url_for('buy', type='BTC')}}">BTC</a> -->
         <table id="cc-table">
           <th>
             STOCK
@@ -56,6 +90,10 @@
 
           <!-- Aurora Table Info -->
           <tr>
+            <!-- <td class="arrow">
+              <img src="/static/arrow.png" />
+
+            </td> -->
             <td id="aurora-table-name">
               AURORACOIN (AUR)
             </td>
@@ -63,6 +101,12 @@
             </td>
             <td>
               0
+            </td>
+            <td class="table-form-cell">
+              <form name="text" method="POST" action="/buy">
+              <input name="buy_coins">
+              <input type="submit" value="aurora">
+            </form>
             </td>
           </tr>
 
@@ -75,6 +119,12 @@
             </td>
             <td>
               0
+            </td>
+            <td class="table-form-cell">
+              <form name="text" method="POST" action="/buy">
+              <input name="buy_coins">
+              <input type="submit" value="bitcoin">
+            </form>
             </td>
           </tr>
 
@@ -235,6 +285,8 @@
 
 
 
+
+
     <!-- D3.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <!-- jQuery -->
@@ -255,7 +307,7 @@
 
       channel.bind('data-updated', data => {
           document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
-          document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
+          document.getElementById('m_left').innerHTML = "BUDGET: " + "$" + data.money_left;
           document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
           document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
           document.getElementById('namecoin-table-price').innerHTML = "$" + data.nmc_price;
@@ -290,7 +342,6 @@
           Plotly.newPlot('monthly_eth_bar', eth_month);
 
       });
-
 
 
   //     $(document).ready(function() {
