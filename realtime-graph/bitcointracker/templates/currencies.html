@@ -31,8 +31,8 @@
       #cc-table th {
         padding-bottom: 30px;
       }
-      #cc-table tr:hover {
-        color: red;
+      #cc-table td:hover {
+        color: #A81000;
       }
       form {
         float: right;
@@ -48,6 +48,9 @@
       .table-form-cell {
         display: inline-block;
 
+      }
+      .hidden {
+        visibility: hidden;
       }
 
 
@@ -105,7 +108,7 @@
             <td class="table-form-cell">
               <form name="text" method="POST" action="/buy">
               <input name="buy_coins">
-              <input type="submit" value="aurora">
+              <input type="submit" value="aurora" class="hidden">
             </form>
             </td>
           </tr>
@@ -123,7 +126,7 @@
             <td class="table-form-cell">
               <form name="text" method="POST" action="/buy">
               <input name="buy_coins">
-              <input type="submit" value="bitcoin">
+              <input type="submit" value="bitcoin" class="hidden">
             </form>
             </td>
           </tr>
