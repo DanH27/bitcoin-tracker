@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from bitcointracker import app, db, bcrypt
-from bitcointracker.forms import RegistrationForm, LoginForm
+from bitcointracker.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from bitcointracker.models import User, Currency
 from pusher import Pusher
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -282,7 +282,13 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title="Account")
+    strbtc = Currency.query.filter_by(user_id=str(current_user.id)).first()
+    users_currencies = [strbtc.btc]
+    #print the current users bitcoins
+    #print(strbtc.btc)
+    form = UpdateAccountForm()
+    image_file = url_for('static', filename='image.png')
+    return render_template('account.html', title="Account", image_file=image_file, form=form, users_currencies=users_currencies)
 
 
 
@@ -291,6 +297,7 @@ def ctable():
     if request.method == 'POST':
         return "POSTED"
     else:
+
         return render_template('currencies.html', title="currencies")
 
 @app.route("/office")
@@ -312,6 +319,8 @@ def buy():
     budget = 100000
     print(request.form)
     if 'buy_coins' in request.form:
+        #print(current_user.id)
+        print(current_user.currency)
         amount = request.form.get('buy_coins')
         coin_name = 'Bitcoin'
         price = prices["BTC"][len(prices["BTC"]) - 1]
