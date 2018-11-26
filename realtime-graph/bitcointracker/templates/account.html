@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="content-section">
+  <div class="media">
+    <img class="rounded-circle account-img" src="userimage.jpg" />
+    <div class="media-body">
+      <h1>Bitcoins (BTC): {{ users_currencies[0] }} </h1>
+      <h2 class="account-heading">{{ current_user.username }}</h2>
+      <p class="text-secondary">
+        {{ current_user.email }}
+      </p>
+    </div>
+  </div>
   <div class="content-section">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
@@ -42,39 +53,6 @@
 
           </div>
 
-          <div class="form-group">
-            {{ form.password.label(class="form-control-label") }}
-            {% if form.password.errors %}
-              {{ form.password(class="form-control form-control-lg is-invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.password.errors %}
-                  <span>{{ error }}</span>
-
-                {% endfor %}
-
-                </div>
-                {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
-            {% endif %}
-
-            </div>
-
-            <div class="form-group">
-              {{ form.confirm_password.label(class="form-control-label") }}
-              {% if form.confirm_password.errors %}
-                {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.confirm_password.errors %}
-                    <span>{{ error }}</span>
-
-                  {% endfor %}
-
-                  </div>
-                  {% else %}
-                  {{ form.confirm_password(class="form-control form-control-lg") }}
-              {% endif %}
-
-              </div>
 
       </fieldset>
 
@@ -84,13 +62,17 @@
         </div>
        </form>
 
-        <div class="border-top pt-3">
-          <small class="text-muted">
-            Already Registered? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-          </small>
-        </div>
-
-
-
-
+</div>
+<div class="currency-owned-table-container">
+  <table>
+    <th>
+      Bitcoins(BTC)
+      </th>
+      <tr>
+        <td>
+          {{ users_currencies[0] }}
+          </td>
+        </tr>
+    </table>
+  </div>
 {% endblock content %}
