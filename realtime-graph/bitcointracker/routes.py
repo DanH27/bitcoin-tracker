@@ -8,7 +8,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from flask import request
 import requests, json, atexit, time, plotly, plotly.graph_objs as go
 from flask_login import login_user, current_user, logout_user, login_required
-
+from flaskext.mysql import MySQL
 
 
 
@@ -22,6 +22,16 @@ pusher = Pusher(
         cluster='us2',
         ssl=True
 )
+
+# mysql = MySQL()
+#
+# # MySQL configurations
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+#
+# app.config['MYSQL_DATABASE_DB'] = 'flaskapi'
+# mysql.init_app(app)
+# conn = mysql.connect()
+# cursor = conn.cursor()
 
 hello = "Hello world!"
 moneyLeft = 100000
@@ -253,8 +263,14 @@ def register():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+
         db.session.add(user)
+
         db.session.commit()
+        currency = Currency(btc=0, user_id=user.id, cash=100000)
+        db.session.add(currency)
+        db.session.commit()
+        print(user.id)
         flash('Youur account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -282,13 +298,19 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    strbtc = Currency.query.filter_by(user_id=str(current_user.id)).first()
-    users_currencies = [strbtc.btc]
+    strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    cash_amt = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    cash_amt_tmp = cash_amt[len(cash_amt) - 1].cash
+    users_currencies = strbtc[len(strbtc) - 1].btc
+
+    #Most recent cash amount
+    print(cash_amt_tmp)
+
     #print the current users bitcoins
     #print(strbtc.btc)
     form = UpdateAccountForm()
     image_file = url_for('static', filename='image.png')
-    return render_template('account.html', title="Account", image_file=image_file, form=form, users_currencies=users_currencies)
+    return render_template('account.html', title="Account", image_file=image_file, form=form, users_currencies=users_currencies, cash_amt_tmp=cash_amt_tmp)
 
 
 
@@ -297,26 +319,26 @@ def ctable():
     if request.method == 'POST':
         return "POSTED"
     else:
+        #query = cursor.execute("SELECT * FROM books")
+        #print(str("sdfdsf") + str(query))
 
         return render_template('currencies.html', title="currencies")
 
-@app.route("/office")
-def office():
-    return render_template('office.html', title="Office")
+@app.route("/main")
+def main():
+    return render_template('main.html')
 
 @app.route("/wallet")
 def wallet():
     return render_template('wallet.html', title="Wallet")
 
-@app.route("/sell")
-def sell():
-    return render_template('sell-confirm.html', title="Sell")
 
 # Buy stocks from table
 @app.route('/buy', methods=['POST', 'GET'])
 def buy():
     error_message = "NOT ENOUGH MONEY"
-    budget = 100000
+    budget_tmp = Currency.query.filter_by(user_id=str(current_user.id)).first()
+    budget = budget_tmp.cash
     print(request.form)
     if 'buy_coins' in request.form:
         #print(current_user.id)
@@ -328,10 +350,15 @@ def buy():
         if budget < total_cost:
             return render_template('currencies.html', error_message=error_message)
         else:
+            final_cost = budget - total_cost
+            currency = Currency(btc=int(amount), user_id=current_user.id, cash=int(final_cost))
+            db.session.add(currency)
+            db.session.commit()
             return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount)
 
-    budget = 100000
-    select = request.form.get('buy_coins')
+    #budget = 100000
+    #select = request.form.get('buy_coins')
+
     #selected_coin = request.args.get('type')
     #return "Buy a " + str(selected_coin) + "for " + str(prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1])
     #price = prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1]
@@ -341,6 +368,11 @@ def buy():
     #     return "<h1>Buy " + str(select) + " bitcoin(s) for "  + "$" + str(int(bitcoinprice) * int(select)) +"s?" + "</h1>" # just to see what select is
     # else:
     #     return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
+@app.route('/sell', methods=['POST', 'GET'])
+def sellcoins():
+    strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    users_currencies = strbtc[len(strbtc) - 1].btc
+    return render_template('sell.html', users_currencies=users_currencies)
 
 #Confirm you buying
 @app.route('/confirm', methods=['POST', 'GET'])

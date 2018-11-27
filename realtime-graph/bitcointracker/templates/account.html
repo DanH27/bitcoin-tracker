@@ -4,6 +4,7 @@
   <div class="media">
     <img class="rounded-circle account-img" src="userimage.jpg" />
     <div class="media-body">
+      <h1>CASH: {{ cash_amt_tmp }}</h1>
       <h1>Bitcoins (BTC): {{ users_currencies[0] }} </h1>
       <h2 class="account-heading">{{ current_user.username }}</h2>
       <p class="text-secondary">
@@ -70,7 +71,7 @@
       </th>
       <tr>
         <td>
-          {{ users_currencies[0] }}
+          {{ users_currencies }}
           </td>
         </tr>
     </table>

@@ -1,0 +1,129 @@
+<!-- ./templates/currencies.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SELL</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+    <style>
+
+    @font-face {
+      font-family: pix;
+      src: url(/static/NESFont.ttf);
+    }
+    body {
+      font-family: pix;
+    }
+    body {
+      background-color: #000000;
+      color: white;
+    }
+      #cc-table {
+          margin: 0 auto;
+          width: 100%;
+      }
+      #cc-table td {
+        text-align: center;
+        padding: 10px;
+        font-family: pix;
+      }
+      #cc-table th {
+        padding-bottom: 30px;
+      }
+      .currency-row:hover {
+        color: #A81000;
+      }
+      form {
+        float: right;
+      }
+      select {
+        display: block;
+        margin-bottom: 15px;
+      }
+      table {
+        border: 10px solid #0000FC;
+        border-radius: 2%;
+      }
+      .table-form-cell {
+        display: inline-block;
+
+      }
+      .hidden {
+        visibility: hidden;
+      }
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+
+    <div class="table-background">
+        <h1>SELECT A CRYPTOCURRENCY TO SELL.</h1>
+        <table id="cc-table">
+          <th>
+            CURRENCY
+          </th>
+          <th>
+            AMT
+          </th>
+          <th>
+            CURRENT PRICE
+          </th>
+
+          <tr class="currency-row">
+            <td>
+              BTC
+              </td>
+              <td>
+                {{ users_currencies }}
+                </td>
+                <td id="current-btc-price">
+
+                  </td>
+            </tr>
+
+
+
+
+        </table>
+    </div>
+
+
+
+
+
+    <!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+    <!-- import Pusher-js library -->
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script type="text/javascript">
+      // connect to Pusher
+      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
+        cluster: 'us2', // gotten from Pusher app dashboard
+        encrypted: true // optional
+      });
+      // subscribe to crypto channel
+      const channel = pusher.subscribe('crypto')
+      // listen for relevant events
+
+      channel.bind('data-updated', data => {
+          document.getElementById('current-btc-price').innerHTML =  "$" + data.btc_price;
+
+
+
+
+      });
+
+
+    </script>
+</body>
+</html>
