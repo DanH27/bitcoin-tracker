@@ -1,1 +1,1 @@
-web: gunicorn app:bitcointracker
+web: gunicorn app:app
