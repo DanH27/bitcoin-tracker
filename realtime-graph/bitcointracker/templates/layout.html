@@ -11,32 +11,43 @@
     {% if title %}
       <title>Flask Blog - {{ title }}</title>
     {% else %}
-      <title>Flask Blog</title>
+      <title>Account</title>
     {% endif %}
   </head>
+  <style>
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
+  body {
+    font-family: pix;
+  }
 
+
+
+  </style>
 <body>
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
-        <a class="navbar-brand mr-4" href="/">Flask Blog</a>
+        <a class="navbar-brand mr-4" href="/">8BTCOIN</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{{ url_for('index')}}">Home</a>
-            <a class="nav-item nav-link" href="{{ url_for('index')}}">About</a>
+            <a class="nav-item nav-link" href="{{ url_for('index')}}">HOME</a>
+            <a class="nav-item nav-link" href="{{ url_for('index')}}">ABOUT</a>
             </div>
 
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('account')}}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout')}}">Logout</a>
+                <a class="nav-item nav-link" href="{{ url_for('account')}}">ACCOUNT</a>
+                <a class="nav-item nav-link" href="{{ url_for('logout')}}">LOGOUT</a>
               {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('login')}}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('register')}}">Register</a>
+                <a class="nav-item nav-link" href="{{ url_for('login')}}">LOGIN</a>
+                <a class="nav-item nav-link" href="{{ url_for('register')}}">REGISTER</a>
               {% endif %}
               </div>
           </div>

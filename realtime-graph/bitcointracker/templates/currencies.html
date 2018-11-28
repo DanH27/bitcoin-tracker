@@ -63,7 +63,7 @@
 
 
           <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
-          <h1>CASH:</h1>
+          <h1>CASH: {{cash_amt}}</h1>
           <h1 class="title is-6" id="m_left">{{moneyLeft}}</h1>
 
 
@@ -77,8 +77,7 @@
 
 
     <div class="table-background">
-        <h1>PICK A CRYPTOCURRENCY TO BUY.</h1>
-        <h1>SELECT A CRYPTOCURRENCY</h1>
+        <h1>SELECT A CRYPTOCURRENCY TO BUY.</h1>
         <!-- <a href="{{url_for('buy', type='BTC')}}">BTC</a> -->
         <table id="cc-table">
           <th>
@@ -121,7 +120,7 @@
             <td id="bitcoin-table-price">
             </td>
             <td>
-              0
+              {{btc_amt}}
             </td>
             <td class="table-form-cell">
               <form name="text" method="POST" action="/buy">

@@ -30,7 +30,7 @@
 <div id='confirm-sell-box'>
   <div id="confirm-sell-text">
     <p>
-      SELL <span id="stocktest"></span>{} STOCKS FOR {}?
+      SOLD <span id="stocktest"></span>{{amount}} {{coin_name}}(s) FOR {{total_cost}}
       </p>
     </div>
   </div>
@@ -46,33 +46,33 @@
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
       // connect to Pusher
-      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-        cluster: 'us2', // gotten from Pusher app dashboard
-        encrypted: true // optional
-      });
-      // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto');
-      // listen for relevant events
-
-
-      channel.bind('data-updated', data => {
-        if !cointest:
-          const cointest = data.btc_price;
-          document.getElementById('stocktest').innerHTML = cointest;
-
-
-          // const graph = JSON.parse(data.graph);
-          // Plotly.newPlot('price_chart', graph, {showLink: false});
-          // const bar_chart = JSON.parse(data.bar_chart);
-          // Plotly.newPlot('market_cap_chart', bar_chart);
-          // document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
-          // document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
-          // document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
-          // document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
-
-
-
-      });
+      // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
+      //   cluster: 'us2', // gotten from Pusher app dashboard
+      //   encrypted: true // optional
+      // });
+      // // subscribe to crypto channel
+      // const channel = pusher.subscribe('crypto');
+      // // listen for relevant events
+      //
+      //
+      // channel.bind('data-updated', data => {
+      //   if !cointest:
+      //     const cointest = data.btc_price;
+      //     document.getElementById('stocktest').innerHTML = cointest;
+      //
+      //
+      //     // const graph = JSON.parse(data.graph);
+      //     // Plotly.newPlot('price_chart', graph, {showLink: false});
+      //     // const bar_chart = JSON.parse(data.bar_chart);
+      //     // Plotly.newPlot('market_cap_chart', bar_chart);
+      //     // document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
+      //     // document.getElementById('m_left').innerHTML = "Budget: " + "$" + data.money_left;
+      //     // document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
+      //     // document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
+      //
+      //
+      //
+      // });
 
 
 
