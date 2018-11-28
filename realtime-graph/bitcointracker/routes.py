@@ -316,13 +316,17 @@ def account():
 
 @app.route("/currencies", methods=['POST', 'GET'])
 def ctable():
+    cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
+    btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    btc_amt = btc_tmp[len(btc_tmp) - 1].btc
     if request.method == 'POST':
         return "POSTED"
     else:
         #query = cursor.execute("SELECT * FROM books")
         #print(str("sdfdsf") + str(query))
 
-        return render_template('currencies.html', title="currencies")
+        return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt=cash_amt)
 
 @app.route("/main")
 def main():
@@ -375,11 +379,39 @@ def sellcoins():
     return render_template('sell.html', users_currencies=users_currencies)
 
 #Confirm you buying
-@app.route('/confirm', methods=['POST', 'GET'])
-def confirm():
-    select = request.form.get('confirm_buy')
-    return str(select)
+@app.route('/confirmsell', methods=['POST', 'GET'])
+def confirmsell():
 
+    if 'sell_coins' in request.form:
+        #print(current_user.id)
+        print(current_user.currency)
+        amount = request.form.get('sell_coins')
+        coin_name = 'Bitcoin'
+        price = prices["BTC"][len(prices["BTC"]) - 1]
+        total_cost = int(amount) * price
+        strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
+        users_currencies = strbtc[len(strbtc) - 1].btc
+        if int(amount) <= users_currencies and int(amount) > 0:
+            budget_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+            budget = budget_tmp[len(budget_tmp) - 1].cash
+            new_cash_amt = budget + total_cost
+
+            new_btc_amt = users_currencies - int(amount)
+            currency = Currency(btc=int(new_btc_amt), user_id=current_user.id, cash=int(new_cash_amt))
+            db.session.add(currency)
+            db.session.commit()
+            return render_template('sell-confirm.html', amount=amount, total_cost=total_cost, coin_name=coin_name)
+
+        else:
+            return render_template('sell.html')
+
+#High Scores Table
+@app.route('/highscores', methods=['GET'])
+def highscores():
+    currencies = Currency.query.limit(10).all()
+    for currency in currencies:
+        print(currency.user_id)
+    return render_template('highscores.html')
 
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()

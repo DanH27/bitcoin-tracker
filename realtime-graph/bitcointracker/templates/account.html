@@ -5,7 +5,7 @@
     <img class="rounded-circle account-img" src="userimage.jpg" />
     <div class="media-body">
       <h1>CASH: {{ cash_amt_tmp }}</h1>
-      <h1>Bitcoins (BTC): {{ users_currencies[0] }} </h1>
+      <h1>BITCOINS (BTC): {{ users_currencies[0] }} </h1>
       <h2 class="account-heading">{{ current_user.username }}</h2>
       <p class="text-secondary">
         {{ current_user.email }}
@@ -17,7 +17,7 @@
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">
-          Join Today
+          UPDATE INFORMATION
           </legend>
           <div class="form-group">
             {{ form.username.label(class="form-control-label") }}
@@ -67,7 +67,7 @@
 <div class="currency-owned-table-container">
   <table>
     <th>
-      Bitcoins(BTC)
+      BITCOINS(BTC)
       </th>
       <tr>
         <td>
