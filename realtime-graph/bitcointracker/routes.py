@@ -405,7 +405,7 @@ def confirmsell():
         else:
             return render_template('sell.html')
 
-#High Scores Table
+#High Scores Table - Add Later
 @app.route('/highscores', methods=['GET'])
 def highscores():
     currencies = Currency.query.limit(10).all()
