@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect
-from bitcointracker import app, db, bcrypt
-from bitcointracker.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from bitcointracker.models import User, Currency
+from cointrade import app, db, bcrypt
+from cointrade.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from cointrade.models import User, Currency
 from pusher import Pusher
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger

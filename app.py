@@ -1,5 +1,5 @@
 #app.py
-from bitcointracker import app
+from cointrade import app
 
 
 
