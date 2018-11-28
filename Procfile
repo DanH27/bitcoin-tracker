@@ -1,1 +1,1 @@
-web: gunicorn realtime-graph:app
+web: gunicorn app:app
