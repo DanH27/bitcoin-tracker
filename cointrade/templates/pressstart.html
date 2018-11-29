@@ -29,12 +29,10 @@
         }
         .img-labels {
           color: white;
-          font-size: 15px;
         }
         #tv {
           height: 720px;
           margin: 0 auto;
-          position: absolute;
 
           z-index: -1;
         }
@@ -43,70 +41,50 @@
           position: relative;
 
         }
-        .tv-screen-buttons {
-          display: inline-block;
-          padding: 25px;
+        #press-start {
+          position: absolute;
+          top: 600px;
+          left: 500px;
+          width: 250px;
         }
-        .button-container {
-          width: 900px;
-          height: 720px;
-          margin: 0 auto;
-          padding: 110px;
-        }
-        .option-icons img:hover {
-          border: 2px solid yellow;
-        }
-
     </style>
 </head>
 <body>
   <div class="tv-background">
     <img id ="tv" src="/static/nestv.png" />
+    <a href="{{ url_for('main') }}"><img id="press-start"  src="/static/PressStart.gif" /></a>
 
   </div>
 
-<div class="button-container">
-
-
-<div class="tv-screen-buttons">
-
-
-  <a class="option-icons" href="{{ url_for('ctable') }}"><img src="/static/report.png" width="125px" height="125px"/></a>
+  <!-- <a href="{{ url_for('ctable') }}"><img src="/static/report.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     BUY COINS
   </p>
-  </div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
+
+  <a href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     CHECK CHARTS
   </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('index') }}"><img src="/static/clock.png" width="125px" height="125px"/></a>
+
+  <a href="{{ url_for('index') }}"><img src="/static/clock.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     CLOCK
   </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('logout') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
+  <a href="{{ url_for('logout') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     LOGOUT
   </p>
-</div>
-  <div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('start') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
+  <a href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     HOMEPAGE
   </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('sellcoins') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
+
+  <a href="{{ url_for('sellcoins') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
   <p class="img-labels">
     SELL COINS
-  </p>
-</div>
-</div>
+  </p> -->
+
+
     <!-- D3.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <!-- jQuery -->

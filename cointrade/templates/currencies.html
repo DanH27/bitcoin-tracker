@@ -52,6 +52,16 @@
       .hidden {
         visibility: hidden;
       }
+      .move-arrow {
+        width: 100px;
+        height: 100px;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+
+      }
+      .move-arrow:hover {
+        border: 2px solid red;
+      }
 
 
 
@@ -64,7 +74,6 @@
 
           <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
           <h1>CASH: {{cash_amt}}</h1>
-          <h1 class="title is-6" id="m_left">{{moneyLeft}}</h1>
 
 
 
@@ -284,6 +293,7 @@
 
         </table>
     </div>
+    <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
 
@@ -309,7 +319,6 @@
 
       channel.bind('data-updated', data => {
           document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
-          document.getElementById('m_left').innerHTML = "BUDGET: " + "$" + data.money_left;
           document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
           document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
           document.getElementById('namecoin-table-price').innerHTML = "$" + data.nmc_price;

@@ -19,6 +19,16 @@
           color: white;
           background-color: black;
         }
+        .move-arrow {
+          width: 100px;
+          height: 100px;
+          -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+
+        }
+        .move-arrow:hover {
+          border: 2px solid red;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +67,7 @@
         </div>
     </div>
 </section>
+<a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 <section class="section">
     <div class="container">
       <div class="column">

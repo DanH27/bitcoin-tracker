@@ -278,14 +278,14 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('index'))
+            return redirect(next_page) if next_page else redirect(url_for('start'))
         else:
             flash('Login Uncessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -293,7 +293,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('start'))
 
 @app.route("/account")
 @login_required
@@ -354,8 +354,11 @@ def buy():
         if budget < total_cost:
             return render_template('currencies.html', error_message=error_message)
         else:
+            btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+            btc_amt = btc_tmp[len(btc_tmp) - 1].btc
+            final_amount = int(btc_amt) + int(amount)
             final_cost = budget - total_cost
-            currency = Currency(btc=int(amount), user_id=current_user.id, cash=int(final_cost))
+            currency = Currency(btc=int(final_amount), user_id=current_user.id, cash=int(final_cost))
             db.session.add(currency)
             db.session.commit()
             return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount)
@@ -412,6 +415,17 @@ def highscores():
     for currency in currencies:
         print(currency.user_id)
     return render_template('highscores.html')
+
+
+#High Scores Table - Add Later
+@app.route('/start', methods=['GET'])
+def start():
+    return render_template('start.html')
+
+#Press Start Tv Screen
+@app.route('/pressstart', methods=['GET'])
+def pressstart():
+    return render_template('pressstart.html')
 
 # create schedule for retrieving prices
 scheduler = BackgroundScheduler()
