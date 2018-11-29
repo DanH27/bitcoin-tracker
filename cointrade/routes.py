@@ -432,9 +432,9 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 scheduler.add_job(
     func=retrieve_data,
-    trigger = IntervalTrigger(seconds=60),
+    trigger = IntervalTrigger(seconds=30),
     id='prices_retrieval_job',
-    name='Retrieve prices every 60 seconds',
+    name='Retrieve prices every 30 seconds',
     replace_existing = True
     )
 
