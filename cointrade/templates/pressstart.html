@@ -2,108 +2,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CryptoLiveChart!</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
-    <style>
-    html {
-      cursor: url(static/Cursor.png), auto;
 
-    }
-    @font-face {
-      font-family: pix;
-      src: url(/static/NESFont.ttf);
-    }
-        .chart {
-            height: 800px;
-        }
-        body {
-          background-color: black;
-          font-family: pix;
-          cursor: url(static/Cursor.png), auto;
-        }
-        img {
 
-          cursor: url(static/Cursor.png), auto;
-        }
-        .img-labels {
-          color: white;
-        }
-        #tv {
-          height: 720px;
-          margin: 0 auto;
+  <title>CryptoLiveChart!</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
 
-          z-index: -1;
-        }
-        .tv-background {
-          margin: 0 auto;
-          position: relative;
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
 
-        }
-        #press-start {
-          position: absolute;
-          top: 600px;
-          left: 500px;
-          width: 250px;
-        }
-    </style>
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  .bg {
+    /* The image used */
+    background-image: url(/static/nestv2.png);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  img {
+
+    cursor: url(static/Cursor.png), auto;
+  }
+  .img-labels {
+    color: white;
+  }
+  /* #tv {
+  height: 720px;
+  margin: 0 auto;
+
+  z-index: -1;
+  } */
+  /* .tv-background {
+  margin: 0 auto;
+  position: relative;
+  background-image: url(/static/nestv.png);
+  background-repeat: no-repeat, repeat;
+  z-index: 0;
+
+  } */
+  /* #press-start {
+  position: absolute;
+  top: 600px;
+  left: 500px;
+  width: 250px;
+  } */
+  .tv-screen {
+    background-color: black;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
+
+  }
+  #game-logo {
+    position: absolute;
+    left: 35%;
+    top: 40%;
+    display: none;
+
+
+  }
+  </style>
 </head>
 <body>
-  <div class="tv-background">
-    <img id ="tv" src="/static/nestv.png" />
-    <a href="{{ url_for('main') }}"><img id="press-start"  src="/static/PressStart.gif" /></a>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+        <img src="/static/titlescreenlogo.png" id="game-logo"/>
+      </div>
+
+    </div>
+
+
 
   </div>
 
-  <!-- <a href="{{ url_for('ctable') }}"><img src="/static/report.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    BUY COINS
-  </p>
-
-  <a href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    CHECK CHARTS
-  </p>
-
-  <a href="{{ url_for('index') }}"><img src="/static/clock.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    CLOCK
-  </p>
-  <a href="{{ url_for('logout') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    LOGOUT
-  </p>
-  <a href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    HOMEPAGE
-  </p>
-
-  <a href="{{ url_for('sellcoins') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    SELL COINS
-  </p> -->
 
 
-    <!-- D3.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
-    <!-- import Pusher-js library -->
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-    <script type="text/javascript">
-      // connect to Pusher
-      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-        cluster: 'us2', // gotten from Pusher app dashboard
-        encrypted: true // optional
-      });
-      // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto')
-      // listen for relevant events
+
+  <script>
+  $( ".bg" ).click(function() {
+    $('#game-logo').fadeIn(800);
+  });
 
 
-    </script>
+  </script>
 </body>
 </html>

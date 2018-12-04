@@ -2,130 +2,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CryptoLiveChart!</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
-    <style>
-    html {
-      cursor: url(static/Cursor.png), auto;
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptoLiveChart!</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+  <style>
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
 
-    }
-    @font-face {
-      font-family: pix;
-      src: url(/static/NESFont.ttf);
-    }
-        .chart {
-            height: 800px;
-        }
-        body {
-          background-color: black;
-          font-family: pix;
-          cursor: url(static/Cursor.png), auto;
-        }
-        img {
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
 
-          cursor: url(static/Cursor.png), auto;
-        }
-        .img-labels {
-          color: white;
-          font-size: 15px;
-        }
-        #tv {
-          height: 720px;
-          margin: 0 auto;
-          position: absolute;
+  .bg {
+    /* The image used */
+    background-image: url(/static/nestv2.png);
 
-          z-index: -1;
-        }
-        .tv-background {
-          margin: 0 auto;
-          position: relative;
+    /* Full height */
+    height: 100%;
 
-        }
-        .tv-screen-buttons {
-          display: inline-block;
-          padding: 25px;
-        }
-        .button-container {
-          width: 900px;
-          height: 720px;
-          margin: 0 auto;
-          padding: 110px;
-        }
-        .option-icons img:hover {
-          border: 2px solid yellow;
-        }
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
 
-    </style>
+  }
+  img {
+
+    cursor: url(static/Cursor.png), auto;
+  }
+  .img-labels {
+    color: white;
+  }
+  .tv-screen {
+    background-color: #00b0fe;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
+
+  }
+
+  #buy-button {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+  }
+  #sell-button {
+    position: absolute;
+    left: 40%;
+    top: 10%;
+  }
+  #clock-button {
+    position: absolute;
+    left: 70%;
+    top: 10%;
+  }
+  #stats-button {
+    position: absolute;
+    left: 10%;
+    top: 40%;
+  }
+  .button-text {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  </style>
 </head>
 <body>
-  <div class="tv-background">
-    <img id ="tv" src="/static/nestv.png" />
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+
+        <div class="menu-buttons" id="buy-button">
+          <a href="{{ url_for('ctable')}}"><img src="/static/buycoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">BUY</h2>
+        </div>
+
+        <div class="menu-buttons" id="sell-button">
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">SELL</h2>
+        </div>
+
+        <div class="menu-buttons" id="clock-button">
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">CLOCK</h2>
+        </div>
+
+        <div class="menu-buttons" id="stats-button">
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">STATS</h2>
+        </div>
+
+      </div>
+
+    </div>
+
+
 
   </div>
-
-<div class="button-container">
-
-
-<div class="tv-screen-buttons">
+  <script>
 
 
-  <a class="option-icons" href="{{ url_for('ctable') }}"><img src="/static/report.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    BUY COINS
-  </p>
-  </div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('index') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    CHECK CHARTS
-  </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('index') }}"><img src="/static/clock.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    CLOCK
-  </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('logout') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    LOGOUT
-  </p>
-</div>
-  <div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('start') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    HOMEPAGE
-  </p>
-</div>
-<div class="tv-screen-buttons">
-  <a class="option-icons" href="{{ url_for('sellcoins') }}"><img src="/static/chart.png" width="125px" height="125px"/></a>
-  <p class="img-labels">
-    SELL COINS
-  </p>
-</div>
-</div>
-    <!-- D3.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
-    <!-- import Pusher-js library -->
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-    <script type="text/javascript">
-      // connect to Pusher
-      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-        cluster: 'us2', // gotten from Pusher app dashboard
-        encrypted: true // optional
-      });
-      // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto')
-      // listen for relevant events
-
-
-    </script>
+  </script>
 </body>
 </html>

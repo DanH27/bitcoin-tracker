@@ -315,18 +315,39 @@ def account():
 
 
 @app.route("/currencies", methods=['POST', 'GET'])
+@login_required
 def ctable():
+    retrieve_data()
     cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
     cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
     btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
     btc_amt = btc_tmp[len(btc_tmp) - 1].btc
-    if request.method == 'POST':
-        return "POSTED"
-    else:
+
+
+    btc_price = prices["BTC"][len(prices["BTC"]) - 1]
+    litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
+    dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
+    nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
+    bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
+    peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
+    feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
+    gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
+    xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
+    auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
+    mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
+    potcoinprice = prices["POT"][len(prices["POT"]) - 1]
+    stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
+    ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
+
+    current_prices = [auroracoinprice, btc_price, bytecoinprice, dogecoinprice, ethereiumcoinprice, feathercoinprice, gridcoinprice, litcoinprice, mazacoinprice, nmcprice, peercoinprice, xpmcoinprice, potcoinprice, stellarcoinprice]
+
+    # if request.method == 'POST':
+    #     return "POSTED"
+    # else:
         #query = cursor.execute("SELECT * FROM books")
         #print(str("sdfdsf") + str(query))
 
-        return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt=cash_amt)
+    return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt=cash_amt, current_prices = current_prices)
 
 @app.route("/main")
 def main():
@@ -339,6 +360,7 @@ def wallet():
 
 # Buy stocks from table
 @app.route('/buy', methods=['POST', 'GET'])
+@login_required
 def buy():
     error_message = "NOT ENOUGH MONEY"
     budget_tmp = Currency.query.filter_by(user_id=str(current_user.id)).first()
@@ -376,6 +398,7 @@ def buy():
     # else:
     #     return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
 @app.route('/sell', methods=['POST', 'GET'])
+@login_required
 def sellcoins():
     strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
     users_currencies = strbtc[len(strbtc) - 1].btc
@@ -383,6 +406,7 @@ def sellcoins():
 
 #Confirm you buying
 @app.route('/confirmsell', methods=['POST', 'GET'])
+@login_required
 def confirmsell():
 
     if 'sell_coins' in request.form:
@@ -419,11 +443,13 @@ def highscores():
 
 #High Scores Table - Add Later
 @app.route('/start', methods=['GET'])
+@login_required
 def start():
     return render_template('start.html')
 
 #Press Start Tv Screen
 @app.route('/pressstart', methods=['GET'])
+@login_required
 def pressstart():
     return render_template('pressstart.html')
 

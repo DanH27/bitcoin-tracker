@@ -109,6 +109,7 @@
               AURORACOIN (AUR)
             </td>
             <td id="aurora-table-price">
+              {{current_prices[0]}}
             </td>
             <td>
               0
@@ -127,6 +128,7 @@
               BITCOIN (BTC)
             </td>
             <td id="bitcoin-table-price">
+              {{current_prices[1]}}
             </td>
             <td>
               {{btc_amt}}
@@ -145,6 +147,7 @@
               BYTECOIN (BCN)
             </td>
             <td id="bytecoin-table-price">
+              {{current_prices[2]}}
             </td>
             <td>
               0
@@ -157,6 +160,7 @@
               DOGECOIN (DOGE)
             </td>
             <td id="doge-table-price">
+              {{current_prices[3]}}
             </td>
             <td>
               0
@@ -169,6 +173,7 @@
               ETHEREIUM (ETC)
             </td>
             <td id="ethereium-table-price">
+              {{current_prices[4]}}
             </td>
             <td>
               0
@@ -181,6 +186,7 @@
               FEATHERCOIN (FTC)
             </td>
             <td id="feathercoin-table-price">
+              {{current_prices[5]}}
             </td>
             <td>
               0
@@ -193,6 +199,7 @@
               GRIDCOIN (GRC)
             </td>
             <td id="gridcoin-table-price">
+              {{current_prices[6]}}
             </td>
             <td>
               0
@@ -205,6 +212,7 @@
               LITECOIN (LTC)
             </td>
             <td id="litecoin-table-price">
+              {{current_prices[7]}}
             </td>
             <td>
               0
@@ -217,6 +225,7 @@
               MAZACOIN (MZC)
             </td>
             <td id="mazacoin-table-price">
+              {{current_prices[8]}}
             </td>
             <td>
               0
@@ -229,6 +238,7 @@
               NAMECOIN (NMC)
             </td>
             <td id="namecoin-table-price">
+              {{current_prices[9]}}
             </td>
             <td>
               0
@@ -243,6 +253,7 @@
               PEERCOIN (PPC)
             </td>
             <td id="peercoin-table-price">
+              {{current_prices[10]}}
             </td>
             <td>
               0
@@ -257,6 +268,7 @@
               PRIMECOIN (XPM)
             </td>
             <td id="primecoin-table-price">
+              {{current_prices[11]}}
             </td>
             <td>
               0
@@ -271,6 +283,7 @@
               POTCOIN (PTC)
             </td>
             <td id="potcoin-table-price">
+              {{current_prices[12]}}
             </td>
             <td>
               0
@@ -283,6 +296,7 @@
               STELLAR (XLM)
             </td>
             <td id="stellar-table-price">
+              {{current_prices[13]}}
             </td>
             <td>
               0
@@ -309,50 +323,50 @@
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
       // connect to Pusher
-      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-        cluster: 'us2', // gotten from Pusher app dashboard
-        encrypted: true // optional
-      });
-      // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto')
-      // listen for relevant events
-
-      channel.bind('data-updated', data => {
-          document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
-          document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
-          document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
-          document.getElementById('namecoin-table-price').innerHTML = "$" + data.nmc_price;
-          document.getElementById('bytecoin-table-price').innerHTML = "$" + data.bcn_price;
-          document.getElementById('peercoin-table-price').innerHTML = "$" + data.ppc_price;
-          document.getElementById('feathercoin-table-price').innerHTML = "$" + data.ftc_price;
-          document.getElementById('gridcoin-table-price').innerHTML = "$" + data.grc_price;
-          document.getElementById('primecoin-table-price').innerHTML = "$" + data.xpm_price;
-          document.getElementById('aurora-table-price').innerHTML = "$" + data.aur_price;
-          document.getElementById('mazacoin-table-price').innerHTML = "$" + data.mzc_price;
-          document.getElementById('potcoin-table-price').innerHTML = "$" + data.pot_price;
-          document.getElementById('stellar-table-price').innerHTML = "$" + data.xlm_price;
-          document.getElementById('ethereium-table-price').innerHTML = "$" + data.eth_price;
-
-
-
-      });
-      channel.bind('month-updated', data => {
-          const btc_month = JSON.parse(data.btc_month_bar);
-          Plotly.newPlot('monthly_btc_bar', btc_month);
-
-      });
-
-      channel.bind('ltc-month-updated', data => {
-          const ltc_month = JSON.parse(data.ltc_month_bar);
-          Plotly.newPlot('monthly_ltc_bar', ltc_month);
-
-      });
-
-      channel.bind('eth-month-updated', data => {
-          const eth_month = JSON.parse(data.eth_month_bar);
-          Plotly.newPlot('monthly_eth_bar', eth_month);
-
-      });
+      // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
+      //   cluster: 'us2', // gotten from Pusher app dashboard
+      //   encrypted: true // optional
+      // });
+      // // subscribe to crypto channel
+      // const channel = pusher.subscribe('crypto')
+      // // listen for relevant events
+      //
+      // channel.bind('data-updated', data => {
+      //     document.getElementById('bitcoin-table-price').innerHTML =  "$" + data.btc_price;
+      //     document.getElementById('litecoin-table-price').innerHTML = "$" + data.ltc_price;
+      //     document.getElementById('doge-table-price').innerHTML = "$" + data.doge_price;
+      //     document.getElementById('namecoin-table-price').innerHTML = "$" + data.nmc_price;
+      //     document.getElementById('bytecoin-table-price').innerHTML = "$" + data.bcn_price;
+      //     document.getElementById('peercoin-table-price').innerHTML = "$" + data.ppc_price;
+      //     document.getElementById('feathercoin-table-price').innerHTML = "$" + data.ftc_price;
+      //     document.getElementById('gridcoin-table-price').innerHTML = "$" + data.grc_price;
+      //     document.getElementById('primecoin-table-price').innerHTML = "$" + data.xpm_price;
+      //     document.getElementById('aurora-table-price').innerHTML = "$" + data.aur_price;
+      //     document.getElementById('mazacoin-table-price').innerHTML = "$" + data.mzc_price;
+      //     document.getElementById('potcoin-table-price').innerHTML = "$" + data.pot_price;
+      //     document.getElementById('stellar-table-price').innerHTML = "$" + data.xlm_price;
+      //     document.getElementById('ethereium-table-price').innerHTML = "$" + data.eth_price;
+      //
+      //
+      //
+      // });
+      // channel.bind('month-updated', data => {
+      //     const btc_month = JSON.parse(data.btc_month_bar);
+      //     Plotly.newPlot('monthly_btc_bar', btc_month);
+      //
+      // });
+      //
+      // channel.bind('ltc-month-updated', data => {
+      //     const ltc_month = JSON.parse(data.ltc_month_bar);
+      //     Plotly.newPlot('monthly_ltc_bar', ltc_month);
+      //
+      // });
+      //
+      // channel.bind('eth-month-updated', data => {
+      //     const eth_month = JSON.parse(data.eth_month_bar);
+      //     Plotly.newPlot('monthly_eth_bar', eth_month);
+      //
+      // });
 
 
   //     $(document).ready(function() {
