@@ -144,109 +144,8 @@ def retrieve_data():
     }
 
     #Trigger pusher event
-    pusher.trigger("crypto", "data-updated", data)
+    ##pusher.trigger("crypto", "data-updated", data)
 
-#Get yearly data for cryptocoins
-###########TEST#################################'2b. high (USD)'
-def yearly_data1(c_info, c_name):
-    monthly_keys = []
-    monthly_btc_values = []
-
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol={}&market=CNY&apikey=JQ5OZI602IGDD72C".format(str(c_name))
-    #Get amount of the currency
-    my_response = json.loads(requests.get(api_url).content)
-    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
-        monthly_keys.append(month)
-
-    for month in monthly_keys:
-        monthly_btc_values.append(my_response['Time Series (Digital Currency Monthly)'][month][str(c_info)])
-
-
-    btc_bar_chart_data = [go.Bar(
-        x=monthly_keys,
-        y=monthly_btc_values
-    )]
-
-    monthly_btc_data = {'btc_month_bar': json.dumps(list(btc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
-
-    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
-
-    #Trigger every month
-    pusher.trigger("crypto", "month-updated", monthly_btc_data)
-
-def yearly_data():
-    monthly_keys = []
-    monthly_btc_values = []
-
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=JQ5OZI602IGDD72C"
-    #Get amount of the currency
-    my_response = json.loads(requests.get(api_url).content)
-    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
-        monthly_keys.append(month)
-
-    for month in monthly_keys:
-        monthly_btc_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
-
-
-    btc_bar_chart_data = [go.Bar(
-        x=monthly_keys,
-        y=monthly_btc_values
-    )]
-
-    monthly_btc_data = {'btc_month_bar': json.dumps(list(btc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
-    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
-
-    #Trigger every month
-    pusher.trigger("crypto", "month-updated", monthly_btc_data)
-
-
-#Get litecoin by month
-def monthly_ltc_data():
-    monthly_keys = []
-    monthly_ltc_values = []
-
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=LTC&market=CNY&apikey=JQ5OZI602IGDD72C"
-    #Get amount of the currency
-    my_response = json.loads(requests.get(api_url).content)
-    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
-        monthly_keys.append(month)
-
-    for month in monthly_keys:
-        monthly_ltc_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
-
-
-    ltc_bar_chart_data = [go.Bar(
-        x=monthly_keys,
-        y=monthly_ltc_values
-    )]
-
-    monthly_ltc_data = {'ltc_month_bar': json.dumps(list(ltc_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
-    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
-    pusher.trigger("crypto", "ltc-month-updated", monthly_ltc_data)
-
-#Get ethereium by month
-def monthly_eth_data():
-    monthly_keys = []
-    monthly_eth_values = []
-
-    api_url = "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=ETH&market=CNY&apikey=JQ5OZI602IGDD72C"
-    #Get amount of the currency
-    my_response = json.loads(requests.get(api_url).content)
-    for month in my_response['Time Series (Digital Currency Monthly)'].keys():
-        monthly_keys.append(month)
-
-    for month in monthly_keys:
-        monthly_eth_values.append(my_response['Time Series (Digital Currency Monthly)'][month]['2b. high (USD)'])
-
-
-    eth_bar_chart_data = [go.Bar(
-        x=monthly_keys,
-        y=monthly_eth_values
-    )]
-
-    monthly_eth_data = {'eth_month_bar': json.dumps(list(eth_bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder)}
-    #print(my_response['Time Series (Digital Currency Monthly)'].keys())
-    pusher.trigger("crypto", "eth-month-updated", monthly_eth_data)
 
 
 @app.route("/btc")
@@ -453,18 +352,34 @@ def start():
 def pressstart():
     return render_template('pressstart.html')
 
-# create schedule for retrieving prices
-scheduler = BackgroundScheduler()
-scheduler.start()
-scheduler.add_job(
-    func=retrieve_data,
-    trigger = IntervalTrigger(seconds=30),
-    id='prices_retrieval_job',
-    name='Retrieve prices every 30 seconds',
-    replace_existing = True
-    )
+#Get Personal Statistics
+@app.route('/stats', methods=['GET'])
+@login_required
+def stats():
+    retrieve_data()
+    bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
+    strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    bitcoins = strbtc[len(strbtc) - 1].btc
+    bit_value = round(int(bitcoins) * bitcoinprice, 2)
+    cash = []
+    dates = []
+    currencies = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    for currency in currencies:
+        cash.append(currency.cash)
+        dates.append(currency.date_posted)
+    return render_template('stats.html', cash=cash, dates=dates, bit_value=bit_value)
 
-# yearly_data1('2b. high (USD)', 'BTC')
-monthly_eth_data()
+# create schedule for retrieving prices
+##scheduler = BackgroundScheduler()
+##scheduler.start()
+##scheduler.add_job(
+##    func=retrieve_data,
+##    trigger = IntervalTrigger(seconds=30),
+##    id='prices_retrieval_job',
+##    name='Retrieve prices every 30 seconds',
+##    replace_existing = True
+#    )
+
+
 # Shut down the scheduler when exiting the app
-atexit.register(lambda: scheduler.shutdown())
+##atexit.register(lambda: scheduler.shutdown())

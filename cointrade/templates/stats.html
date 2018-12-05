@@ -1,0 +1,58 @@
+<!-- ./templates/stats.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stats</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <style>
+  .money {
+    float: left;
+  }
+  .dates {
+    float: right;
+  }
+
+
+  </style>
+</head>
+<body>
+  <h1>Bitcoins (BTC) Value: {{bit_value}}</h1>
+
+  <div class="money">
+    <h1>Money</h1>
+
+
+    {% for money in cash %}
+
+
+    <p>
+      {{money}}
+    </p>
+
+    {% endfor %}
+  </div>
+
+
+  <div class="dates">
+    <h1>Dates</h1>
+
+
+
+
+    {% for date in dates %}
+    <p>
+      {{date}}
+    </p>
+
+    {% endfor %}
+  </div>
+
+
+
+  <script>
+
+  </script>
+</body>
+</html>
