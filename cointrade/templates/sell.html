@@ -93,6 +93,7 @@
                 {{ users_currencies }}
                 </td>
                 <td id="current-btc-price">
+                  {{ current_prices[0]}}
 
                   </td>
                   <td class="table-form-cell">
@@ -122,22 +123,22 @@
     <!-- import Pusher-js library -->
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
-      // connect to Pusher
-      const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-        cluster: 'us2', // gotten from Pusher app dashboard
-        encrypted: true // optional
-      });
-      // subscribe to crypto channel
-      const channel = pusher.subscribe('crypto')
-      // listen for relevant events
-
-      channel.bind('data-updated', data => {
-          document.getElementById('current-btc-price').innerHTML =  "$" + data.btc_price;
-
-
-
-
-      });
+      // // connect to Pusher
+      // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
+      //   cluster: 'us2', // gotten from Pusher app dashboard
+      //   encrypted: true // optional
+      // });
+      // // subscribe to crypto channel
+      // const channel = pusher.subscribe('crypto')
+      // // listen for relevant events
+      //
+      // channel.bind('data-updated', data => {
+      //     document.getElementById('current-btc-price').innerHTML =  "$" + data.btc_price;
+      //
+      //
+      //
+      //
+      // });
 
 
     </script>

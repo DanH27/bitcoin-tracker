@@ -40,11 +40,10 @@ currentBudget = 0
 #Array of times
 times = []
 #The name of currencies stored in an array
-currencies = ["BCN", "BTC", "LTC", "NMC", "DOGE", "PPC", "FTC", "GRC", "XPM", "AUR" ,"MZC", "POT", "XLM", "ETH"]
+currencies = ["BTC", "LTC", "NMC", "PPC", "XPM", "XLM", "ETH"]
 #Prices and their prices stored in a array in a dictionary.
-prices = {"BCN": [], "BTC": [], "LTC": [], "DOGE": [], "NMC": [],
-"PPC": [], "FTC": [], "GRC": [], "XPM": [], "AUR": [],
-"MZC": [], "POT": [], "XLM": [], "ETH": []}
+prices = {"BTC": [], "LTC": [], "NMC": [],
+"PPC": [], "XPM": [], "XLM": [], "ETH": []}
 
 
 
@@ -101,6 +100,8 @@ def retrieve_data():
         name="{} Prices".format(currency)
     ) for currency in currencies]
 
+
+
     # create an array of traces for bar chart data
     bar_chart_data = [go.Bar(
         x=currencies,
@@ -109,16 +110,16 @@ def retrieve_data():
 
     bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
     litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
-    dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
+    #dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
     nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
-    bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
+    #bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
     peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
-    feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
-    gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
+    #feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
+    #gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
     xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
-    auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
-    mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
-    potcoinprice = prices["POT"][len(prices["POT"]) - 1]
+    #auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
+    #mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
+    #potcoinprice = prices["POT"][len(prices["POT"]) - 1]
     stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
     ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
 
@@ -129,16 +130,16 @@ def retrieve_data():
         'btc_price': bitcoinprice,
         'money_left': moneyLeft,
         'ltc_price': litcoinprice,
-        'doge_price': dogecoinprice,
+        #'doge_price': dogecoinprice,
         'nmc_price': nmcprice,
-        'bcn_price': bytecoinprice,
+        #'bcn_price': bytecoinprice,
         'ppc_price': peercoinprice,
-        'ftc_price': feathercoinprice,
-        'grc_price': gridcoinprice,
+        #'ftc_price': feathercoinprice,
+        #'grc_price': gridcoinprice,
         'xpm_price': xpmcoinprice,
-        'aur_price': auroracoinprice,
-        'mzc_price': mazacoinprice,
-        'pot_price': potcoinprice,
+        #'aur_price': auroracoinprice,
+        #'mzc_price': mazacoinprice,
+        #'pot_price': potcoinprice,
         'xlm_price': stellarcoinprice,
         'eth_price': ethereiumcoinprice
     }
@@ -225,20 +226,20 @@ def ctable():
 
     btc_price = prices["BTC"][len(prices["BTC"]) - 1]
     litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
-    dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
+    #dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
     nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
-    bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
+    #bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
     peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
-    feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
-    gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
+    #feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
+    #gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
     xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
-    auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
-    mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
-    potcoinprice = prices["POT"][len(prices["POT"]) - 1]
+    #auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
+    #mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
+    #potcoinprice = prices["POT"][len(prices["POT"]) - 1]
     stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
     ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
 
-    current_prices = [auroracoinprice, btc_price, bytecoinprice, dogecoinprice, ethereiumcoinprice, feathercoinprice, gridcoinprice, litcoinprice, mazacoinprice, nmcprice, peercoinprice, xpmcoinprice, potcoinprice, stellarcoinprice]
+    current_prices = [round(btc_price, 2), round(ethereiumcoinprice, 2), round(litcoinprice, 2), round(nmcprice, 2), round(peercoinprice, 2), round(xpmcoinprice,2), round(stellarcoinprice, 2)]
 
     # if request.method == 'POST':
     #     return "POSTED"
@@ -252,18 +253,14 @@ def ctable():
 def main():
     return render_template('main.html')
 
-@app.route("/wallet")
-def wallet():
-    return render_template('wallet.html', title="Wallet")
-
 
 # Buy stocks from table
 @app.route('/buy', methods=['POST', 'GET'])
 @login_required
 def buy():
     error_message = "NOT ENOUGH MONEY"
-    budget_tmp = Currency.query.filter_by(user_id=str(current_user.id)).first()
-    budget = budget_tmp.cash
+    cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
     print(request.form)
     if 'buy_coins' in request.form:
         #print(current_user.id)
@@ -272,36 +269,28 @@ def buy():
         coin_name = 'Bitcoin'
         price = prices["BTC"][len(prices["BTC"]) - 1]
         total_cost = int(amount) * price
-        if budget < total_cost:
-            return render_template('currencies.html', error_message=error_message)
+        if cash_amt < total_cost:
+            return render_template('buy.html', error_message=error_message)
         else:
             btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
             btc_amt = btc_tmp[len(btc_tmp) - 1].btc
             final_amount = int(btc_amt) + int(amount)
-            final_cost = budget - total_cost
+            final_cost = cash_amt - total_cost
             currency = Currency(btc=int(final_amount), user_id=current_user.id, cash=int(final_cost))
             db.session.add(currency)
             db.session.commit()
             return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount)
 
-    #budget = 100000
-    #select = request.form.get('buy_coins')
 
-    #selected_coin = request.args.get('type')
-    #return "Buy a " + str(selected_coin) + "for " + str(prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1])
-    #price = prices[str(selected_coin)][len(prices[str(selected_coin)]) - 1]
-    #return render_template('buy.html')
-    # bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
-    # if (budget - (int(bitcoinprice) * int(select)) >= 0):
-    #     return "<h1>Buy " + str(select) + " bitcoin(s) for "  + "$" + str(int(bitcoinprice) * int(select)) +"s?" + "</h1>" # just to see what select is
-    # else:
-    #     return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
 @app.route('/sell', methods=['POST', 'GET'])
 @login_required
 def sellcoins():
+    retrieve_data()
+    btc_price = prices["BTC"][len(prices["BTC"]) - 1]
+    current_prices = [btc_price]
     strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
     users_currencies = strbtc[len(strbtc) - 1].btc
-    return render_template('sell.html', users_currencies=users_currencies)
+    return render_template('sell.html', users_currencies=users_currencies, current_prices=current_prices)
 
 #Confirm you buying
 @app.route('/confirmsell', methods=['POST', 'GET'])
@@ -364,11 +353,34 @@ def stats():
     cash = []
     dates = []
     currencies = Currency.query.filter_by(user_id=str(current_user.id)).all()
+
     for currency in currencies:
         cash.append(currency.cash)
         dates.append(currency.date_posted)
-    return render_template('stats.html', cash=cash, dates=dates, bit_value=bit_value)
 
+    graph_data = [go.Scatter(
+        x=dates,
+        y=cash,
+        name="{} Prices".format(money)
+    ) for money in cash]
+
+    graph = json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder)
+
+
+
+
+    return render_template('stats.html', cash=cash, dates=dates, bit_value=bit_value, graph=graph)
+
+@app.route("/chart")
+def chart():
+    values = []
+    labels = []
+    currencies = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    for currency in currencies:
+        values.append(currency.btc)
+        labels.append(currency.date_posted)
+
+    return render_template('chart.html', values=values, labels=labels)
 # create schedule for retrieving prices
 ##scheduler = BackgroundScheduler()
 ##scheduler.start()

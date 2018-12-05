@@ -42,6 +42,7 @@
         margin-bottom: 15px;
       }
       table {
+        background-color: #00b0fe;
         border: 10px solid #0000FC;
         border-radius: 2%;
       }
@@ -99,28 +100,7 @@
             # COINS OWNED
           </th>
 
-          <!-- Aurora Table Info -->
-          <tr>
-            <!-- <td class="arrow">
-              <img src="/static/arrow.png" />
 
-            </td> -->
-            <td id="aurora-table-name">
-              AURORACOIN (AUR)
-            </td>
-            <td id="aurora-table-price">
-              {{current_prices[0]}}
-            </td>
-            <td>
-              0
-            </td>
-            <td class="table-form-cell">
-              <form name="text" method="POST" action="/buy">
-              <input name="buy_coins">
-              <input type="submit" value="aurora" class="hidden">
-            </form>
-            </td>
-          </tr>
 
           <!-- Bitcoin Table Info -->
           <tr>
@@ -128,7 +108,7 @@
               BITCOIN (BTC)
             </td>
             <td id="bitcoin-table-price">
-              {{current_prices[1]}}
+              {{current_prices[0]}}
             </td>
             <td>
               {{btc_amt}}
@@ -141,31 +121,7 @@
             </td>
           </tr>
 
-          <!-- ByteCoin Table Info -->
-          <tr>
-            <td id="bytecoin-table-name">
-              BYTECOIN (BCN)
-            </td>
-            <td id="bytecoin-table-price">
-              {{current_prices[2]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
 
-          <!-- DOGE Table Info -->
-          <tr>
-            <td id="dogecoin-table-name">
-              DOGECOIN (DOGE)
-            </td>
-            <td id="doge-table-price">
-              {{current_prices[3]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
 
           <!-- Ethereium Table Info -->
           <tr>
@@ -173,38 +129,13 @@
               ETHEREIUM (ETC)
             </td>
             <td id="ethereium-table-price">
-              {{current_prices[4]}}
+              {{current_prices[1]}}
             </td>
             <td>
               0
             </td>
           </tr>
 
-          <!-- Feathercoin Table Info -->
-          <tr>
-            <td id="feathercoin-table-name">
-              FEATHERCOIN (FTC)
-            </td>
-            <td id="feathercoin-table-price">
-              {{current_prices[5]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-          <!-- Gridcoin Table Info -->
-          <tr>
-            <td id="gridcoin-table-name">
-              GRIDCOIN (GRC)
-            </td>
-            <td id="gridcoin-table-price">
-              {{current_prices[6]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
 
           <!-- Litecoin Table Info -->
           <tr>
@@ -212,25 +143,13 @@
               LITECOIN (LTC)
             </td>
             <td id="litecoin-table-price">
-              {{current_prices[7]}}
+              {{current_prices[2]}}
             </td>
             <td>
               0
             </td>
           </tr>
 
-          <!-- Mazacoin Table Info -->
-          <tr>
-            <td id="mazacoin-table-name">
-              MAZACOIN (MZC)
-            </td>
-            <td id="mazacoin-table-price">
-              {{current_prices[8]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
 
           <!-- Namecoin Table Info -->
           <tr>
@@ -238,7 +157,7 @@
               NAMECOIN (NMC)
             </td>
             <td id="namecoin-table-price">
-              {{current_prices[9]}}
+              {{current_prices[3]}}
             </td>
             <td>
               0
@@ -253,7 +172,7 @@
               PEERCOIN (PPC)
             </td>
             <td id="peercoin-table-price">
-              {{current_prices[10]}}
+              {{current_prices[4]}}
             </td>
             <td>
               0
@@ -268,7 +187,7 @@
               PRIMECOIN (XPM)
             </td>
             <td id="primecoin-table-price">
-              {{current_prices[11]}}
+              {{current_prices[5]}}
             </td>
             <td>
               0
@@ -276,19 +195,6 @@
           </tr>
 
 
-
-          <!-- Potcoin Table Info -->
-          <tr>
-            <td id="potcoin-table-name">
-              POTCOIN (PTC)
-            </td>
-            <td id="potcoin-table-price">
-              {{current_prices[12]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
 
           <!-- Stellar Table Info -->
           <tr>
@@ -296,7 +202,7 @@
               STELLAR (XLM)
             </td>
             <td id="stellar-table-price">
-              {{current_prices[13]}}
+              {{current_prices[6]}}
             </td>
             <td>
               0
