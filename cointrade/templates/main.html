@@ -1,0 +1,116 @@
+<!-- ./templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptoLiveChart!</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+  <style>
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  .bg {
+    /* The image used */
+    background-image: url(/static/nestv2.png);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  img {
+
+    cursor: url(static/Cursor.png), auto;
+  }
+  .img-labels {
+    color: white;
+  }
+  .tv-screen {
+    background-color: #00b0fe;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
+
+  }
+
+  #buy-button {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+  }
+  #sell-button {
+    position: absolute;
+    left: 40%;
+    top: 10%;
+  }
+  #clock-button {
+    position: absolute;
+    left: 70%;
+    top: 10%;
+  }
+  #stats-button {
+    position: absolute;
+    left: 10%;
+    top: 40%;
+  }
+  .button-text {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+
+        <div class="menu-buttons" id="buy-button">
+          <a href="{{ url_for('ctable')}}"><img src="/static/buycoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">BUY</h2>
+        </div>
+
+        <div class="menu-buttons" id="sell-button">
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">SELL</h2>
+        </div>
+
+        <div class="menu-buttons" id="clock-button">
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">CLOCK</h2>
+        </div>
+
+        <div class="menu-buttons" id="stats-button">
+          <a href="{{ url_for('stats')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">STATS</h2>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+  <script>
+
+
+  </script>
+</body>
+</html>

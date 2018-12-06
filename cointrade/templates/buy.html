@@ -1,0 +1,88 @@
+<!-- ./templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Buy!</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+    <style>
+
+    @font-face {
+      font-family: pix;
+      src: url(/static/NESFont.ttf);
+    }
+    body {
+      font-family: pix;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      background-color: black;
+      height: 100%;
+      width: 100%;
+    }
+    #dialog {
+      color: white;
+      font-weight: bold;
+    }
+
+
+    </style>
+</head>
+<body>
+  <div class="buy-box">
+    <div class="buy-box-inner">
+    <h1>
+      <div id="dialog"></div>
+      <!-- BOUGHT {{amount}} {{coin_name}}(s) FOR {{total_cost}} -->
+    </h1>
+      <a href="/currencies">BACK TO TABLE</a>
+    </div>
+  </div>
+
+<script>
+
+  var dialogs = ['BOUGHT {{amount}} {{coin_name}}(s) FOR {{total_cost}}'],
+  initial = 0;
+  individual = dialogs[initial].split('');
+
+  
+
+  function createDiag ( dialog ) {
+
+  for(i = 0; i < dialog.length; i++) {
+  (function(i){
+
+    setTimeout(function(){
+      $('#dialog').text($('#dialog').text() +   dialog[i]);
+      if (i == dialog.length-1 ) {
+        Mousetrap.bind('enter', function() {
+          if (dialogs[initial+1]) {
+            $('#dialog').text('');
+            initial += 1;
+            individual = dialogs[initial].split('');
+            createDiag( individual );
+          }
+        });
+      }
+    }, 50*i);
+
+  }(i));
+
+  }
+
+  }
+
+createDiag( individual );
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!-- ./templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <title>CryptoLiveChart!</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  .bg {
+    /* The image used */
+    background-image: url(/static/nestv2.png);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  img {
+
+    cursor: url(static/Cursor.png), auto;
+  }
+  .img-labels {
+    color: white;
+  }
+  /* #tv {
+  height: 720px;
+  margin: 0 auto;
+
+  z-index: -1;
+  } */
+  /* .tv-background {
+  margin: 0 auto;
+  position: relative;
+  background-image: url(/static/nestv.png);
+  background-repeat: no-repeat, repeat;
+  z-index: 0;
+
+  } */
+  /* #press-start {
+  position: absolute;
+  top: 600px;
+  left: 500px;
+  width: 250px;
+  } */
+  .tv-screen {
+    background-color: black;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
+
+  }
+  #game-logo {
+    position: absolute;
+    left: 35%;
+    top: 40%;
+    display: none;
+
+
+  }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+        <img src="/static/titlescreenlogo.png" id="game-logo"/>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+
+
+  <script>
+  $( ".bg" ).click(function() {
+    $('#game-logo').fadeIn(800);
+  });
+
+
+  </script>
+</body>
+</html>
