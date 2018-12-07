@@ -7,6 +7,34 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
     <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bg {
+      /* The image used */
+      background-image: url(/static/nestv2.png);
+
+      /* Full height */
+      height: 100%;
+
+      /* Center and scale the image nicely */
+      /* background-position: center; */
+      background-repeat: no-repeat;
+      background-size: cover;
+
+    }
+  .tv-screen {
+      background-color: #00b0fe;
+      height: 90%;
+      width: 80%;
+      position: absolute;
+      margin: 0 auto;
+      top: 50px;
+      left: 85px;
+
+    }
 
     @font-face {
       font-family: pix;
@@ -63,6 +91,10 @@
       .move-arrow:hover {
         border: 2px solid red;
       }
+      .inner-tv-screen {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
 
 
 
@@ -71,10 +103,159 @@
 
 </head>
 <body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+        <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
+        <h1>CASH: {{cash_amt}}</h1>
+        <div class="table-background">
+            <h1>SELECT A CRYPTOCURRENCY TO BUY.</h1>
+
+            <!-- <a href="{{url_for('buy', type='BTC')}}">BTC</a> -->
+            <table id="cc-table">
+              <th>
+                STOCK
+              </th>
+              <th>
+                PRICE
+              </th>
+              <th>
+                # COINS OWNED
+              </th>
 
 
-          <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
-          <h1>CASH: {{cash_amt}}</h1>
+
+              <!-- Bitcoin Table Info -->
+              <tr>
+                <td id="bitcoin-table-name">
+                  BITCOIN (BTC)
+                </td>
+                <td id="bitcoin-table-price">
+                  {{current_prices[0]}}
+                </td>
+                <td>
+                  {{btc_amt}}
+                </td>
+                <td class="table-form-cell">
+                  <form name="text" method="POST" action="/buy">
+                  <input name="buy_coins">
+                  <input type="submit" value="bitcoin" class="hidden">
+                </form>
+                </td>
+              </tr>
+
+
+
+              <!-- Ethereium Table Info -->
+              <!-- <tr>
+                <td id="ethereium-table-name">
+                  ETHEREIUM (ETC)
+                </td>
+                <td id="ethereium-table-price">
+                  {{current_prices[1]}}
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  <form name="text" method="POST" action="/buy">
+                  <input name="buy_coins">
+                  <input type="submit" value="bitcoin" class="hidden">
+                </form>
+                </td>
+              </tr> -->
+
+
+              <!-- Litecoin Table Info -->
+              <!-- <tr>
+                <td id="litecoin-table-name">
+                  LITECOIN (LTC)
+                </td>
+                <td id="litecoin-table-price">
+                  {{current_prices[2]}}
+                </td>
+                <td>
+                  0
+                </td>
+              </tr> -->
+
+
+              <!-- Namecoin Table Info -->
+              <!-- <tr>
+                <td id="namecoin-table-name">
+                  NAMECOIN (NMC)
+                </td>
+                <td id="namecoin-table-price">
+                  {{current_prices[3]}}
+                </td>
+                <td>
+                  0
+                </td>
+              </tr> -->
+
+
+
+              <!-- Peercoin Table Info -->
+              <!-- <tr>
+                <td id="peercoin-table-name">
+                  PEERCOIN (PPC)
+                </td>
+                <td id="peercoin-table-price">
+                  {{current_prices[4]}}
+                </td>
+                <td>
+                  0
+                </td>
+              </tr> -->
+
+
+
+              <!-- Primecoin Table Info -->
+              <!-- <tr>
+                <td id="primecoin-table-name">
+                  PRIMECOIN (XPM)
+                </td>
+                <td id="primecoin-table-price">
+                  {{current_prices[5]}}
+                </td>
+                <td>
+                  0
+                </td>
+              </tr> -->
+
+
+
+              <!-- Stellar Table Info -->
+              <!-- <tr>
+                <td id="stellar-table-name">
+                  STELLAR (XLM)
+                </td>
+                <td id="stellar-table-price">
+                  {{current_prices[6]}}
+                </td>
+                <td>
+                  0
+                </td>
+              </tr> -->
+
+
+
+            </table>
+        </div>
+        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+
+
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+
 
 
 
@@ -83,143 +264,10 @@
           <input type="submit" value="Buy">
       </form> -->
 
-      <p>{{error_message}}</p>
-
-
-    <div class="table-background">
-        <h1>SELECT A CRYPTOCURRENCY TO BUY.</h1>
-        <!-- <a href="{{url_for('buy', type='BTC')}}">BTC</a> -->
-        <table id="cc-table">
-          <th>
-            STOCK
-          </th>
-          <th>
-            PRICE
-          </th>
-          <th>
-            # COINS OWNED
-          </th>
+      <!-- <p>{{error_message}}</p> -->
 
 
 
-          <!-- Bitcoin Table Info -->
-          <tr>
-            <td id="bitcoin-table-name">
-              BITCOIN (BTC)
-            </td>
-            <td id="bitcoin-table-price">
-              {{current_prices[0]}}
-            </td>
-            <td>
-              {{btc_amt}}
-            </td>
-            <td class="table-form-cell">
-              <form name="text" method="POST" action="/buy">
-              <input name="buy_coins">
-              <input type="submit" value="bitcoin" class="hidden">
-            </form>
-            </td>
-          </tr>
-
-
-
-          <!-- Ethereium Table Info -->
-          <tr>
-            <td id="ethereium-table-name">
-              ETHEREIUM (ETC)
-            </td>
-            <td id="ethereium-table-price">
-              {{current_prices[1]}}
-            </td>
-            <td>
-              0
-            </td>
-            <td>
-              <form name="text" method="POST" action="/buy">
-              <input name="buy_coins">
-              <input type="submit" value="bitcoin" class="hidden">
-            </form>
-            </td>
-          </tr>
-
-
-          <!-- Litecoin Table Info -->
-          <tr>
-            <td id="litecoin-table-name">
-              LITECOIN (LTC)
-            </td>
-            <td id="litecoin-table-price">
-              {{current_prices[2]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-
-          <!-- Namecoin Table Info -->
-          <tr>
-            <td id="namecoin-table-name">
-              NAMECOIN (NMC)
-            </td>
-            <td id="namecoin-table-price">
-              {{current_prices[3]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-
-
-          <!-- Peercoin Table Info -->
-          <tr>
-            <td id="peercoin-table-name">
-              PEERCOIN (PPC)
-            </td>
-            <td id="peercoin-table-price">
-              {{current_prices[4]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-
-
-          <!-- Primecoin Table Info -->
-          <tr>
-            <td id="primecoin-table-name">
-              PRIMECOIN (XPM)
-            </td>
-            <td id="primecoin-table-price">
-              {{current_prices[5]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-
-
-          <!-- Stellar Table Info -->
-          <tr>
-            <td id="stellar-table-name">
-              STELLAR (XLM)
-            </td>
-            <td id="stellar-table-price">
-              {{current_prices[6]}}
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-
-
-
-        </table>
-    </div>
-    <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
 
@@ -234,6 +282,8 @@
     <!-- import Pusher-js library -->
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
+
+
       // connect to Pusher
       // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
       //   cluster: 'us2', // gotten from Pusher app dashboard

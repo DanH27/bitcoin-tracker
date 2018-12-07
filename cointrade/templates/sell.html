@@ -7,18 +7,40 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
     <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bg {
+      /* The image used */
+      background-image: url(/static/nestv2.png);
+
+      /* Full height */
+      height: 100%;
+
+      /* Center and scale the image nicely */
+      /* background-position: center; */
+      background-repeat: no-repeat;
+      background-size: cover;
+
+    }
+  .tv-screen {
+      background-color: #00b0fe;
+      height: 90%;
+      width: 80%;
+      position: absolute;
+      margin: 0 auto;
+      top: 50px;
+      left: 85px;
+
+    }
 
     @font-face {
       font-family: pix;
       src: url(/static/NESFont.ttf);
     }
-    body {
-      font-family: pix;
-    }
-    body {
-      background-color: #000000;
-      color: white;
-    }
+
       #cc-table {
           margin: 0 auto;
           width: 100%;
@@ -70,48 +92,62 @@
 
 </head>
 <body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+        <div class="table-background">
+            <h1>SELECT A CRYPTOCURRENCY TO SELL.</h1>
+            <h1 id="profit-loss">CURRENT PROFIT/LOSS: {{current_profit_loss}}</h1>
+            <table id="cc-table">
+              <th>
+                CURRENCY
+              </th>
+              <th>
+                AMT
+              </th>
+              <th>
+                CURRENT PRICE
+              </th>
 
-
-    <div class="table-background">
-        <h1>SELECT A CRYPTOCURRENCY TO SELL.</h1>
-        <table id="cc-table">
-          <th>
-            CURRENCY
-          </th>
-          <th>
-            AMT
-          </th>
-          <th>
-            CURRENT PRICE
-          </th>
-
-          <tr class="currency-row">
-            <td>
-              BTC
-              </td>
-              <td>
-                {{ users_currencies }}
-                </td>
-                <td id="current-btc-price">
-                  {{ current_prices[0]}}
-
+              <tr class="currency-row">
+                <td>
+                  BTC
                   </td>
-                  <td class="table-form-cell">
-                    <form name="text" method="POST" action="/confirmsell">
-                    <input name="sell_coins">
-                    <input type="submit" value="bitcoin" class="hidden">
-                  </form>
-                  </td>
-            </tr>
+                  <td>
+                    {{ users_currencies }}
+                    </td>
+                    <td id="current-btc-price">
+                      {{ current_prices[0]}}
+
+                      </td>
+                      <td class="table-form-cell">
+                        <form name="text" method="POST" action="/confirmsell">
+                        <input name="sell_coins">
+                        <input type="submit" value="bitcoin" class="hidden">
+                      </form>
+                      </td>
+                </tr>
 
 
 
 
-        </table>
+            </table>
+        </div>
+
+
+    <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+
+
+
+      </div>
+
     </div>
 
 
-<a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+
+  </div>
+
+
 
 
     <!-- D3.js -->
@@ -123,6 +159,11 @@
     <!-- import Pusher-js library -->
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
+    if ({{current_profit_loss}} > 0) {
+      document.getElementById('profit-loss').style.color = 'green'
+    } else {
+      document.getElementById('profit-loss').style.color = 'red'
+    }
       // // connect to Pusher
       // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
       //   cluster: 'us2', // gotten from Pusher app dashboard

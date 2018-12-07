@@ -8,6 +8,34 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
     <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bg {
+      /* The image used */
+      background-image: url(/static/nestv2.png);
+
+      /* Full height */
+      height: 100%;
+
+      /* Center and scale the image nicely */
+      /* background-position: center; */
+      background-repeat: no-repeat;
+      background-size: cover;
+
+    }
+  .tv-screen {
+      background-color: #00b0fe;
+      height: 90%;
+      width: 80%;
+      position: absolute;
+      margin: 0 auto;
+      top: 50px;
+      left: 85px;
+
+    }
 
     @font-face {
       font-family: pix;
@@ -35,15 +63,28 @@
     </style>
 </head>
 <body>
-  <div class="buy-box">
-    <div class="buy-box-inner">
-    <h1>
-      <div id="dialog"></div>
-      <!-- BOUGHT {{amount}} {{coin_name}}(s) FOR {{total_cost}} -->
-    </h1>
-      <a href="/currencies">BACK TO TABLE</a>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+
+        <div class="buy-box">
+          <div class="buy-box-inner">
+          <h1>
+            <div id="dialog"></div>
+            <!-- BOUGHT {{amount}} {{coin_name}}(s) FOR {{total_cost}} -->
+          </h1>
+            <a href="/currencies">BACK TO TABLE</a>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+
+
   </div>
+
 
 <script>
 
@@ -51,7 +92,7 @@
   initial = 0;
   individual = dialogs[initial].split('');
 
-  
+
 
   function createDiag ( dialog ) {
 

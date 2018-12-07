@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bg {
+      /* The image used */
+      background-image: url(/static/nestv2.png);
+
+      /* Full height */
+      height: 100%;
+
+      /* Center and scale the image nicely */
+      /* background-position: center; */
+      background-repeat: no-repeat;
+      background-size: cover;
+
+    }
+  .tv-screen {
+      background-color: #00b0fe;
+      height: 90%;
+      width: 80%;
+      position: absolute;
+      margin: 0 auto;
+      top: 50px;
+      left: 85px;
+
+    }
         .chart {
             height: 800px;
         }
@@ -27,13 +55,27 @@
     </style>
 </head>
 <body>
-<div id='confirm-sell-box'>
-  <div id="confirm-sell-text">
-    <p>
-      SOLD <span id="stocktest"></span>{{amount}} {{coin_name}}(s) FOR {{total_cost}}
-      </p>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+
+        <<div id='confirm-sell-box'>
+          <div id="confirm-sell-text">
+            <p id="dialog">
+
+              </p>
+              <a href="/sell">BACK TO TABLE</a>
+            </div>
+          </div>
+
+      </div>
+
     </div>
+
+
+
   </div>
+
 
 
     <!-- D3.js -->
@@ -45,6 +87,38 @@
     <!-- import Pusher-js library -->
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
+    var dialogs = ['SOLD {{amount}} {{coin_name}}(s) FOR {{total_cost}}'],
+    initial = 0;
+    individual = dialogs[initial].split('');
+
+
+
+    function createDiag ( dialog ) {
+
+    for(i = 0; i < dialog.length; i++) {
+    (function(i){
+
+      setTimeout(function(){
+        $('#dialog').text($('#dialog').text() +   dialog[i]);
+        if (i == dialog.length-1 ) {
+          Mousetrap.bind('enter', function() {
+            if (dialogs[initial+1]) {
+              $('#dialog').text('');
+              initial += 1;
+              individual = dialogs[initial].split('');
+              createDiag( individual );
+            }
+          });
+        }
+      }, 50*i);
+
+    }(i));
+
+    }
+
+    }
+
+  createDiag( individual );
       // connect to Pusher
       // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
       //   cluster: 'us2', // gotten from Pusher app dashboard

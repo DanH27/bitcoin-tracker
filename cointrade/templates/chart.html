@@ -7,13 +7,53 @@
    <!-- import plugin script -->
    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
    <!-- https://pythonspot.com/flask-and-great-looking-charts-using-chart-js/ -->
+   <style>
+   body, html {
+     height: 100%;
+     margin: 0;
+   }
+   .bg {
+     /* The image used */
+     background-image: url(/static/nestv2.png);
+
+     /* Full height */
+     height: 100%;
+
+     /* Center and scale the image nicely */
+     /* background-position: center; */
+     background-repeat: no-repeat;
+     background-size: cover;
+
+   }
+ .tv-screen {
+     background-color: #00b0fe;
+     height: 90%;
+     width: 80%;
+     position: absolute;
+     margin: 0 auto;
+     top: 50px;
+     left: 85px;
+
+   }
+   </style>
 
 </head>
 <body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
+        <!-- bar chart canvas element -->
+        <canvas id="chart" width="900" height="600"></canvas>
 
-<h1>Flask Chart.js</h1>
-<!-- bar chart canvas element -->
-<canvas id="chart" width="600" height="400"></canvas>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
 
 <script>
 
