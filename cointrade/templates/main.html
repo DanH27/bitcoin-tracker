@@ -58,20 +58,21 @@
     left: 40%;
     top: 10%;
   }
-  #clock-button {
+
+  #stats-button {
     position: absolute;
     left: 70%;
     top: 10%;
-  }
-  #stats-button {
-    position: absolute;
-    left: 10%;
-    top: 40%;
   }
   .button-text {
     text-align: center;
     color: white;
     font-weight: bold;
+  }
+  #chart-button {
+    position: absolute;
+    left: 10%;
+    top: 40%;
   }
 
   </style>
@@ -91,15 +92,19 @@
           <h2 class="button-text">SELL</h2>
         </div>
 
-        <div class="menu-buttons" id="clock-button">
-          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
-          <h2 class="button-text">CLOCK</h2>
-        </div>
-
         <div class="menu-buttons" id="stats-button">
           <a href="{{ url_for('stats')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
           <h2 class="button-text">STATS</h2>
         </div>
+
+
+        <div class="menu-buttons" id="chart-button">
+          <a href="{{ url_for('chart')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">CHART</h2>
+        </div>
+        
+
+
 
       </div>
 

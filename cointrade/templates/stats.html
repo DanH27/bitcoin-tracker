@@ -7,52 +7,129 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <style>
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  .bg {
+    /* The image used */
+    background-image: url(/static/nestv2.png);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+.tv-screen {
+    background-color: #00b0fe;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
+
+  }
   .money {
     float: left;
   }
   .dates {
     float: right;
   }
+  .btcs {
+    float: left;
+    padding-left: 340px;
+  }
+  #profit-loss {
+    color: black;
+  }
+  .inner-tv-screen {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
 
   </style>
 </head>
 <body>
+  <div class="bg">
+    <div class="tv-screen">
+      <div class="inner-tv-screen">
 
-  <h1>Bitcoins (BTC) Value: {{bit_value}}</h1>
-
-  <div class="money">
-    <h1>Money</h1>
-
-
-    {% for money in cash %}
-
-
-    <p>
-      {{money}}
-    </p>
-
-    {% endfor %}
-  </div>
+        <h1>CURRENT BITCOIN AMT: {{bitcoins}}</h1>
+        <h1>Bitcoins (BTC) Value: {{bit_value_formatted}}</h1>
+        <h1 id="starting/current">STARTING/CURRENT CASH: $25,000/{{current_cash}}</h1>
 
 
-  <div class="dates">
-    <h1>Dates</h1>
+        <div class="money">
+          <h1>Money</h1>
+
+
+          {% for money in cash %}
+
+
+          <p>
+            {{money}}
+          </p>
+
+
+          {% endfor %}
+        </div>
+
+
+
+        <div class="dates">
+          <h1>Dates</h1>
 
 
 
 
-    {% for date in dates %}
-    <p>
-      {{date}}
-    </p>
+          {% for date in dates %}
+          <p>
+            {{date}}
+          </p>
 
-    {% endfor %}
+          {% endfor %}
+        </div>
+
+        <div class="btcs">
+          <h1>Bitcoin AMTs</h1>
+
+
+          {% for btc in btcs %}
+          <p>
+            {{btc}}
+          </p>
+          {% endfor %}
+        </div>
+
+        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+
+
+
+
+
+      </div>
+
+    </div>
+
+
+
   </div>
 
 
 
   <script>
+  if ({{profitLoss}} < 0) {
+    document.getElementById('profit-loss').style.color = 'red';
+  } else {
+    document.getElementById('profit-loss').style.color = 'green';
+  }
 
 
   </script>

@@ -11,17 +11,10 @@
     {% if title %}
       <title>8BTCoin - {{ title }}</title>
     {% else %}
-      <title>Account</title>
+      <title>8BTCoin</title>
     {% endif %}
   </head>
   <style>
-  @font-face {
-    font-family: pix;
-    src: url(/static/NESFont.ttf);
-  }
-  body {
-    font-family: pix;
-  }
 
 
 
@@ -31,14 +24,14 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
         <img src="/static/8btbird.png" height="50px"/>
-        <a class="navbar-brand mr-4" href="{{ url_for('start')}}">8BTCOIN</a>
+        <a class="navbar-brand mr-4" href="{{ url_for('index')}}">8BTCOIN</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{{ url_for('start')}}">HOME</a>
+            <a class="nav-item nav-link" href="{{ url_for('index')}}">HOME</a>
             <a class="nav-item nav-link" href="{{ url_for('index')}}">ABOUT</a>
             </div>
 

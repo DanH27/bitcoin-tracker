@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, jsonify
 from cointrade import app, db, bcrypt
 from cointrade.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from cointrade.models import User, Currency
@@ -54,7 +54,7 @@ def index():
 
     #    print("HEY")
 
-    return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
+    return render_template("start.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
 
 
 @app.route('/form', methods=['POST', 'GET'])
@@ -167,18 +167,18 @@ def register():
         db.session.add(user)
 
         db.session.commit()
-        currency = Currency(btc=0, user_id=user.id, cash=100000)
+        currency = Currency(btc=0, user_id=user.id, cash=25000)
         db.session.add(currency)
         db.session.commit()
         print(user.id)
-        flash('Youur account has been created! You are now able to log in', 'success')
+        flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main'))
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -193,7 +193,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('start'))
+    return redirect(url_for('index'))
 
 @app.route("/account")
 @login_required
@@ -223,6 +223,7 @@ def ctable():
     btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
     btc_amt = btc_tmp[len(btc_tmp) - 1].btc
 
+    cash_amt_formatted = "${:,.2f}".format(cash_amt)
 
     btc_price = prices["BTC"][len(prices["BTC"]) - 1]
     litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
@@ -241,13 +242,19 @@ def ctable():
 
     current_prices = [round(btc_price, 2), round(ethereiumcoinprice, 2), round(litcoinprice, 2), round(nmcprice, 2), round(peercoinprice, 2), round(xpmcoinprice,2), round(stellarcoinprice, 2)]
 
+    current_btc_price_formatted = "${:,.2f}".format(current_prices[0])
+
+
+
+
+
     # if request.method == 'POST':
     #     return "POSTED"
     # else:
         #query = cursor.execute("SELECT * FROM books")
         #print(str("sdfdsf") + str(query))
 
-    return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt=cash_amt, current_prices = current_prices)
+    return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt_formatted=cash_amt_formatted, current_btc_price_formatted = current_btc_price_formatted)
 
 @app.route("/main")
 def main():
@@ -286,11 +293,21 @@ def buy():
 @login_required
 def sellcoins():
     retrieve_data()
+    cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
     btc_price = prices["BTC"][len(prices["BTC"]) - 1]
     current_prices = [btc_price]
     strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
     users_currencies = strbtc[len(strbtc) - 1].btc
-    return render_template('sell.html', users_currencies=users_currencies, current_prices=current_prices)
+    btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    btc_amt = btc_tmp[len(btc_tmp) - 1].btc
+
+    if btc_amt <= 0:
+        current_profit_loss = 0
+    else:
+        current_profit_loss = round((cash_amt + (btc_amt * btc_price)) - 25000, 2)
+
+    return render_template('sell.html', users_currencies=users_currencies, current_prices=current_prices, current_profit_loss=current_profit_loss)
 
 #Confirm you buying
 @app.route('/confirmsell', methods=['POST', 'GET'])
@@ -320,19 +337,68 @@ def confirmsell():
         else:
             return render_template('sell.html')
 
-#High Scores Table - Add Later
-@app.route('/highscores', methods=['GET'])
-def highscores():
-    currencies = Currency.query.limit(10).all()
-    for currency in currencies:
-        print(currency.user_id)
-    return render_template('highscores.html')
+#Get all usernames
+@app.route('/api/usernames', methods=['GET'])
+def getusernames():
+    usernames = {}
+    budget_tmp = User.query.all()
+    for item in budget_tmp:
+        usernames[str(item.id)] = {}
+    for item in budget_tmp:
+        usernames[str(item.id)]['username'] = str(item.username)
+        usernames[str(item.id)]['email'] = str(item.email)
+    print(usernames)
+    return jsonify(usernames)
+
+#Get one username
+@app.route('/api/usernames/<user_id>', methods=['GET'])
+def getuser(user_id):
+    user_dict = {}
+    user = User.query.filter_by(id=user_id).first()
+    user_dict[str(user.id)] = {}
+    user_dict[str(user.id)]['username'] = str(user.username)
+    user_dict[str(user.id)]['email'] = str(user.email)
+    print(user_dict)
+
+
+    return jsonify(user_dict)
+
+
+#Get all currency trades
+@app.route('/api/trades/', methods=['GET'])
+def gettrades():
+    trades_dict = {}
+    trades = Currency.query.all()
+
+    for trade in trades:
+        trades_dict[str(trade.user_id)] = {}
+    for trade in trades:
+        trades_dict[str(trade.user_id)]['btc'] = str(trade.btc)
+
+    return jsonify(trades_dict)
+
+
+#Get specific user btc amt
+@app.route('/api/trades/<id>', methods=['GET'])
+def gettrade(id):
+    trade_dict = {}
+    trade = Currency.query.filter_by(user_id=id).all()
+    last_trade = trade[len(trade) - 1]
+    trade_dict[str(last_trade.user_id)] = {}
+    trade_dict[str(last_trade.user_id)]['btc'] = str(last_trade.btc)
+
+    return jsonify(trade_dict)
+
+
 
 
 #High Scores Table - Add Later
 @app.route('/start', methods=['GET'])
 @login_required
 def start():
+    #############API TEST WORKS################
+    r = requests.get('http://127.0.0.1:5000/api/trades/')
+    print(r.json())
     return render_template('start.html')
 
 #Press Start Tv Screen
@@ -350,37 +416,45 @@ def stats():
     strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
     bitcoins = strbtc[len(strbtc) - 1].btc
     bit_value = round(int(bitcoins) * bitcoinprice, 2)
+    bit_value_formatted = "${:,.2f}".format(bit_value)
     cash = []
     dates = []
+    btcs = []
     currencies = Currency.query.filter_by(user_id=str(current_user.id)).all()
+    profitLoss = round(25000 - 25000, 2)
+
+
 
     for currency in currencies:
-        cash.append(currency.cash)
+        cash.append("${:,.2f}".format(currency.cash))
         dates.append(currency.date_posted)
+        btcs.append(currency.btc)
 
-    graph_data = [go.Scatter(
-        x=dates,
-        y=cash,
-        name="{} Prices".format(money)
-    ) for money in cash]
-
-    graph = json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder)
+    current_cash = cash[len(cash) - 1]
 
 
-
-
-    return render_template('stats.html', cash=cash, dates=dates, bit_value=bit_value, graph=graph)
+    return render_template('stats.html', cash=cash, dates=dates, bit_value_formatted=bit_value_formatted, btcs=btcs, bitcoins=bitcoins, current_cash=current_cash)
 
 @app.route("/chart")
 def chart():
     values = []
     labels = []
+
+    cash_values = []
+    cash_labels = []
+
     currencies = Currency.query.filter_by(user_id=str(current_user.id)).all()
     for currency in currencies:
         values.append(currency.btc)
         labels.append(currency.date_posted)
 
-    return render_template('chart.html', values=values, labels=labels)
+    for currency in currencies:
+        cash_values.append(currency.cash)
+        cash_labels.append(currency.date_posted)
+
+    return render_template('chart.html', values=values, labels=labels, cash_values=cash_values, cash_labels=cash_labels )
+
+
 # create schedule for retrieving prices
 ##scheduler = BackgroundScheduler()
 ##scheduler.start()
