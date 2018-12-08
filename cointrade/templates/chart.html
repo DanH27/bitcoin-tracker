@@ -35,6 +35,10 @@
      left: 85px;
 
    }
+   #cash_chart {
+     position: absolute;
+   }
+
    </style>
 
 </head>
@@ -43,7 +47,10 @@
     <div class="tv-screen">
       <div class="inner-tv-screen">
         <!-- bar chart canvas element -->
-        <canvas id="chart" width="900" height="600"></canvas>
+        <h1>Bitcoins Owned</h1>
+
+        <canvas id="chart" width="600" height="500"></canvas>
+          <canvas id="cash_chart" width="500" height="500"></canvas>
 
 
       </div>
@@ -92,6 +99,55 @@
 
    steps = 10
    max = 30
+   // draw bar chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+
+   });
+
+   // bar chart data
+   var barData = {
+   labels : [{% for item in cash_labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {
+            fillColor: "rgba(0, 0, 252, 1)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [{% for item in cash_values %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+   }
+
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+
+   // get bar chart canvas
+   var mychart = document.getElementById("cash_chart").getContext("2d");
+
+   steps = 10
+   max = 60000
    // draw bar chart
    var LineChartDemo = new Chart(mychart).Line(barData, {
         scaleOverride: true,
