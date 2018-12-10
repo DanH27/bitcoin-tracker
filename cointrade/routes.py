@@ -414,6 +414,7 @@ def stats():
 
     return render_template('stats.html', cash=cash, dates=dates, bit_value_formatted=bit_value_formatted, btcs=btcs, bitcoins=bitcoins, current_cash=current_cash)
 
+#Chart route
 @app.route("/chart")
 def chart():
     values = []
