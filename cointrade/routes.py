@@ -379,7 +379,7 @@ def start():
     #############API TEST WORKS################
     #r = requests.get('http://127.0.0.1:5000/api/trades/')
     #print(r.json())
-    #return render_template('start.html')
+    return render_template('start.html')
 
 #Press Start Tv Screen
 @app.route('/pressstart', methods=['GET'])
