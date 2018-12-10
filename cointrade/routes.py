@@ -375,6 +375,7 @@ def adminpanal():
 @app.route('/start', methods=['GET'])
 @login_required
 def start():
+    print("TEST")
     #############API TEST WORKS################
     #r = requests.get('http://127.0.0.1:5000/api/trades/')
     #print(r.json())
