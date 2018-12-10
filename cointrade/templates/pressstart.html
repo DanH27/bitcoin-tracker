@@ -99,7 +99,7 @@
   <script>
   $('#game-logo').fadeIn(800);
   $( ".bg" ).click(function() {
-    location.replace("http://127.0.0.1:5000/main");
+    location.replace("{{ url_for('main')}}");
   });
 
 
