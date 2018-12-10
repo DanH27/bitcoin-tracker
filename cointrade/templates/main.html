@@ -74,6 +74,11 @@
     left: 10%;
     top: 40%;
   }
+  #logout-button {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+  }
 
   </style>
 </head>
@@ -102,7 +107,12 @@
           <a href="{{ url_for('chart')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
           <h2 class="button-text">CHART</h2>
         </div>
-        
+
+        <div class="menu-buttons" id="logout-button">
+          <a href="{{ url_for('logout')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <h2 class="button-text">LOGOUT</h2>
+        </div>
+
 
 
 

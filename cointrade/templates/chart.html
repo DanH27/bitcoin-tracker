@@ -38,6 +38,19 @@
    #cash_chart {
      position: absolute;
    }
+   .cash-heading {
+     position: absolute;
+     top: 10px;
+     right: 250px;
+   }
+
+   .move-arrow {
+     display: block;
+     -webkit-transform: scaleX(-1);
+     transform: scaleX(-1);
+     height: 50px;
+     width: 60px;
+   }
 
    </style>
 
@@ -46,11 +59,14 @@
   <div class="bg">
     <div class="tv-screen">
       <div class="inner-tv-screen">
+        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
         <!-- bar chart canvas element -->
         <h1>Bitcoins Owned</h1>
 
         <canvas id="chart" width="600" height="500"></canvas>
+        <h1 class="cash-heading">CASH</h1>
           <canvas id="cash_chart" width="500" height="500"></canvas>
+
 
 
       </div>
@@ -110,6 +126,7 @@
         barShowStroke : true,
         scaleShowLabels: true,
         bezierCurve: false,
+        labelString: 'dsfdsfsd'
 
    });
 

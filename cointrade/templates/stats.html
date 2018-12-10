@@ -7,10 +7,17 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <style>
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
   body, html {
     height: 100%;
     margin: 0;
+    font-family: pix;
+    font-size: 12px;
   }
+
 
   .bg {
     /* The image used */
@@ -43,7 +50,7 @@
   }
   .btcs {
     float: left;
-    padding-left: 340px;
+    padding-left: 200px;
   }
   #profit-loss {
     color: black;
@@ -51,6 +58,11 @@
   .inner-tv-screen {
     padding-left: 20px;
     padding-right: 20px;
+  }
+  .move-arrow {
+    display: block;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
   }
 
 
@@ -62,12 +74,13 @@
       <div class="inner-tv-screen">
 
         <h1>CURRENT BITCOIN AMT: {{bitcoins}}</h1>
-        <h1>Bitcoins (BTC) Value: {{bit_value_formatted}}</h1>
+        <h1>BITCOINS (BTC) VALUE: {{bit_value_formatted}}</h1>
         <h1 id="starting/current">STARTING/CURRENT CASH: $25,000/{{current_cash}}</h1>
+        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
         <div class="money">
-          <h1>Money</h1>
+          <h1>MONEY</h1>
 
 
           {% for money in cash %}
@@ -84,7 +97,7 @@
 
 
         <div class="dates">
-          <h1>Dates</h1>
+          <h1>DATES</h1>
 
 
 
@@ -98,7 +111,7 @@
         </div>
 
         <div class="btcs">
-          <h1>Bitcoin AMTs</h1>
+          <h1>BITCOIN AMTs</h1>
 
 
           {% for btc in btcs %}
@@ -108,7 +121,7 @@
           {% endfor %}
         </div>
 
-        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+
 
 
 

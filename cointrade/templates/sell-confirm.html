@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
     <style>
     body, html {
       height: 100%;
@@ -35,22 +35,35 @@
       left: 85px;
 
     }
-        .chart {
-            height: 800px;
-        }
-        body {
-          width: 1400px;
-          height: 800px;
-        }
-        #confirm-sell-box {
-          width: 80%;
-          height: 50%;
-          margin: 0 auto;
-          background-color: black;
-        }
-        #confirm-sell-text {
-          color: white;
-        }
+
+    @font-face {
+      font-family: pix;
+      src: url(/static/NESFont.ttf);
+    }
+    body {
+      font-family: pix;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      background-color: #000000;
+      height: 100%;
+      width: 100%;
+    }
+    #dialog {
+      color: black;
+      font-weight: bold;
+    }
+
+
+
+    #dialog {
+      color: black;
+      font-weight: bold;
+    }
 
     </style>
 </head>
@@ -59,14 +72,15 @@
     <div class="tv-screen">
       <div class="inner-tv-screen">
 
-        <<div id='confirm-sell-box'>
-          <div id="confirm-sell-text">
-            <p id="dialog">
-
-              </p>
-              <a href="/sell">BACK TO TABLE</a>
-            </div>
+        <div class="buy-box">
+          <div class="buy-box-inner">
+          <h1>
+            <div id="dialog"></div>
+            <!-- BOUGHT {{amount}} {{coin_name}}(s) FOR {{total_cost}} -->
+          </h1>
+            <a href="{{ url_for('sellcoins') }}">BACK TO SELL</a>
           </div>
+        </div>
 
       </div>
 
@@ -75,6 +89,7 @@
 
 
   </div>
+
 
 
 
@@ -87,7 +102,7 @@
     <!-- import Pusher-js library -->
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script type="text/javascript">
-    var dialogs = ['SOLD {{amount}} {{coin_name}}(s) FOR {{total_cost}}'],
+    var dialogs = ['{{message}}'],
     initial = 0;
     individual = dialogs[initial].split('');
 

@@ -2,17 +2,17 @@
 {% block content %}
 <div class="content-section">
   <div class="media">
-    <img class="rounded-circle account-img" src="userimage.jpg" />
+    <!-- <img class="rounded-circle account-img" src="userimage.jpg" /> -->
     <div class="media-body">
       <h1>CASH: {{ cash_amt_tmp }}</h1>
-      <h1>BITCOINS (BTC): {{ users_currencies[0] }} </h1>
-      <h2 class="account-heading">{{ current_user.username }}</h2>
+      <h1>BITCOINS (BTC): {{ users_currencies }} </h1>
+      <h2 class="account-heading">USERNAME: {{ current_user.username }}</h2>
       <p class="text-secondary">
-        {{ current_user.email }}
+        EMAIL: {{ current_user.email }}
       </p>
     </div>
   </div>
-  <div class="content-section">
+  <!-- <div class="content-section">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
@@ -63,7 +63,7 @@
         </div>
        </form>
 
-</div>
+</div> -->
 <div class="currency-owned-table-container">
   <table>
     <th>

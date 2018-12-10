@@ -15,13 +15,13 @@ from flaskext.mysql import MySQL
 
 
 # configure pusher object
-pusher = Pusher(
-        app_id='625209',
-        key='d0fbb6934c4ec3d8a001',
-        secret='d1471059e40c19e1a1fe',
-        cluster='us2',
-        ssl=True
-)
+# pusher = Pusher(
+#         app_id='625209',
+#         key='d0fbb6934c4ec3d8a001',
+#         secret='d1471059e40c19e1a1fe',
+#         cluster='us2',
+#         ssl=True
+# )
 
 # mysql = MySQL()
 #
@@ -33,17 +33,13 @@ pusher = Pusher(
 # conn = mysql.connect()
 # cursor = conn.cursor()
 
-hello = "Hello world!"
-moneyLeft = 100000
-bitcoinprice = 0
 currentBudget = 0
 #Array of times
 times = []
 #The name of currencies stored in an array
-currencies = ["BTC", "LTC", "NMC", "PPC", "XPM", "XLM", "ETH"]
+currencies = ["BTC"]
 #Prices and their prices stored in a array in a dictionary.
-prices = {"BTC": [], "LTC": [], "NMC": [],
-"PPC": [], "XPM": [], "XLM": [], "ETH": []}
+prices = {"BTC": []}
 
 
 
@@ -54,19 +50,7 @@ def index():
 
     #    print("HEY")
 
-    return render_template("start.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
-
-
-@app.route('/form', methods=['POST', 'GET'])
-def test():
-    budget = 100000
-    select = request.form.get('comp_select')
-    bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
-    if (budget - (int(bitcoinprice) * int(select)) >= 0):
-        return "<h1>Buy " + str(select) + " bitcoin(s) for "  + "$" + str(int(bitcoinprice) * int(select)) +"s?" + "</h1>" # just to see what select is
-    else:
-        return render_template("index.html", moneyLeft=moneyLeft, bitcoinprice=bitcoinprice)
-
+    return render_template("start.html")
 
 
 def retrieve_data():
@@ -94,55 +78,43 @@ def retrieve_data():
         #Set prices key as currencyname and append price to list
         prices[currency].append(price)
 
-    graph_data = [go.Scatter(
-        x=times,
-        y=prices.get(currency),
-        name="{} Prices".format(currency)
-    ) for currency in currencies]
-
-
-
-    # create an array of traces for bar chart data
-    bar_chart_data = [go.Bar(
-        x=currencies,
-        y=list(current_prices.values())
-    )]
+    # graph_data = [go.Scatter(
+    #     x=times,
+    #     y=prices.get(currency),
+    #     name="{} Prices".format(currency)
+    # ) for currency in currencies]
+    #
+    #
+    #
+    # # create an array of traces for bar chart data
+    # bar_chart_data = [go.Bar(
+    #     x=currencies,
+    #     y=list(current_prices.values())
+    # )]
 
     bitcoinprice = prices["BTC"][len(prices["BTC"]) - 1]
-    litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
-    #dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
-    nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
-    #bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
-    peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
-    #feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
-    #gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
-    xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
-    #auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
-    #mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
-    #potcoinprice = prices["POT"][len(prices["POT"]) - 1]
-    stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
-    ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
 
 
-    data = {
-        'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder),
-        'bar_chart': json.dumps(list(bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder),
-        'btc_price': bitcoinprice,
-        'money_left': moneyLeft,
-        'ltc_price': litcoinprice,
-        #'doge_price': dogecoinprice,
-        'nmc_price': nmcprice,
-        #'bcn_price': bytecoinprice,
-        'ppc_price': peercoinprice,
-        #'ftc_price': feathercoinprice,
-        #'grc_price': gridcoinprice,
-        'xpm_price': xpmcoinprice,
-        #'aur_price': auroracoinprice,
-        #'mzc_price': mazacoinprice,
-        #'pot_price': potcoinprice,
-        'xlm_price': stellarcoinprice,
-        'eth_price': ethereiumcoinprice
-    }
+
+    # data = {
+    #     'graph': json.dumps(list(graph_data), cls=plotly.utils.PlotlyJSONEncoder),
+    #     'bar_chart': json.dumps(list(bar_chart_data), cls=plotly.utils.PlotlyJSONEncoder),
+    #     'btc_price': bitcoinprice,
+    #     'money_left': moneyLeft,
+    #     'ltc_price': litcoinprice,
+    #     #'doge_price': dogecoinprice,
+    #     'nmc_price': nmcprice,
+    #     #'bcn_price': bytecoinprice,
+    #     'ppc_price': peercoinprice,
+    #     #'ftc_price': feathercoinprice,
+    #     #'grc_price': gridcoinprice,
+    #     'xpm_price': xpmcoinprice,
+    #     #'aur_price': auroracoinprice,
+    #     #'mzc_price': mazacoinprice,
+    #     #'pot_price': potcoinprice,
+    #     'xlm_price': stellarcoinprice,
+    #     'eth_price': ethereiumcoinprice
+    # }
 
     #Trigger pusher event
     ##pusher.trigger("crypto", "data-updated", data)
@@ -162,7 +134,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, admin=False)
 
         db.session.add(user)
 
@@ -204,7 +176,7 @@ def account():
     users_currencies = strbtc[len(strbtc) - 1].btc
 
     #Most recent cash amount
-    print(cash_amt_tmp)
+    print(current_user.admin)
 
     #print the current users bitcoins
     #print(strbtc.btc)
@@ -226,33 +198,12 @@ def ctable():
     cash_amt_formatted = "${:,.2f}".format(cash_amt)
 
     btc_price = prices["BTC"][len(prices["BTC"]) - 1]
-    litcoinprice = prices["LTC"][len(prices["LTC"]) - 1]
-    #dogecoinprice = prices["DOGE"][len(prices["DOGE"]) - 1]
-    nmcprice = prices["NMC"][len(prices["NMC"]) - 1]
-    #bytecoinprice = prices["BCN"][len(prices["BCN"]) - 1]
-    peercoinprice = prices["PPC"][len(prices["PPC"]) - 1]
-    #feathercoinprice = prices["FTC"][len(prices["FTC"]) - 1]
-    #gridcoinprice = prices["GRC"][len(prices["GRC"]) - 1]
-    xpmcoinprice = prices["XPM"][len(prices["XPM"]) - 1]
-    #auroracoinprice = prices["AUR"][len(prices["AUR"]) - 1]
-    #mazacoinprice = prices["MZC"][len(prices["MZC"]) - 1]
-    #potcoinprice = prices["POT"][len(prices["POT"]) - 1]
-    stellarcoinprice = prices["XLM"][len(prices["XLM"]) - 1]
-    ethereiumcoinprice = prices["ETH"][len(prices["ETH"]) - 1]
 
-    current_prices = [round(btc_price, 2), round(ethereiumcoinprice, 2), round(litcoinprice, 2), round(nmcprice, 2), round(peercoinprice, 2), round(xpmcoinprice,2), round(stellarcoinprice, 2)]
+
+    current_prices = [round(btc_price, 2)]
 
     current_btc_price_formatted = "${:,.2f}".format(current_prices[0])
 
-
-
-
-
-    # if request.method == 'POST':
-    #     return "POSTED"
-    # else:
-        #query = cursor.execute("SELECT * FROM books")
-        #print(str("sdfdsf") + str(query))
 
     return render_template('currencies.html', title="currencies", btc_amt=btc_amt, cash_amt_formatted=cash_amt_formatted, current_btc_price_formatted = current_btc_price_formatted)
 
@@ -265,7 +216,7 @@ def main():
 @app.route('/buy', methods=['POST', 'GET'])
 @login_required
 def buy():
-    error_message = "NOT ENOUGH MONEY"
+
     cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
     cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
     print(request.form)
@@ -277,7 +228,8 @@ def buy():
         price = prices["BTC"][len(prices["BTC"]) - 1]
         total_cost = int(amount) * price
         if cash_amt < total_cost:
-            return render_template('buy.html', error_message=error_message)
+            message = 'NOT ENOUGH MONEY'
+            return render_template('buy.html', message=message)
         else:
             btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
             btc_amt = btc_tmp[len(btc_tmp) - 1].btc
@@ -286,7 +238,8 @@ def buy():
             currency = Currency(btc=int(final_amount), user_id=current_user.id, cash=int(final_cost))
             db.session.add(currency)
             db.session.commit()
-            return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount)
+            message = 'BOUGHT ' + str(amount) + ' BITCOINS(s) FOR ' + "${:,.2f}".format(final_cost)
+            return render_template('buy.html', price=price, coin_name=coin_name, total_cost=total_cost, amount=amount, message=message)
 
 
 @app.route('/sell', methods=['POST', 'GET'])
@@ -296,7 +249,7 @@ def sellcoins():
     cash_amt_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
     cash_amt = cash_amt_tmp[len(cash_amt_tmp) - 1].cash
     btc_price = prices["BTC"][len(prices["BTC"]) - 1]
-    current_prices = [btc_price]
+    current_prices = ["${:,.2f}".format(btc_price)]
     strbtc = Currency.query.filter_by(user_id=str(current_user.id)).all()
     users_currencies = strbtc[len(strbtc) - 1].btc
     btc_tmp = Currency.query.filter_by(user_id=str(current_user.id)).all()
@@ -332,10 +285,12 @@ def confirmsell():
             currency = Currency(btc=int(new_btc_amt), user_id=current_user.id, cash=int(new_cash_amt))
             db.session.add(currency)
             db.session.commit()
-            return render_template('sell-confirm.html', amount=amount, total_cost=total_cost, coin_name=coin_name)
+            message = 'SOLD ' + str(amount) + ' BITCOINS'+ ' FOR ' + "${:,.2f}".format(total_cost)
+            return render_template('sell-confirm.html', amount=amount, total_cost=total_cost, coin_name=coin_name, message=message)
 
-        else:
-            return render_template('sell.html')
+        if int(amount) > int(users_currencies):
+            message = 'NOT ENOUGH BITCOINS'
+            return render_template('sell-confirm.html', message=message)
 
 #Get all usernames
 @app.route('/api/usernames', methods=['GET'])
@@ -389,7 +344,31 @@ def gettrade(id):
 
     return jsonify(trade_dict)
 
+#Delete User
+@app.route('/api/user/<d_user_id>', methods=['DELETE'])
+def deleteUser(d_user_id):
+    user = User.query.filter_by(id=d_user_id).first()
+    currency = Currency.query.filter_by(user_id=d_user_id).all()
+    for currency1 in currency:
+        db.session.delete(currency1)
+    db.session.delete(user)
+    db.session.commit()
 
+
+
+#Admin Panal
+@app.route('/admin', methods=['GET'])
+def adminpanal():
+    users = requests.get('http://127.0.0.1:5000/api/usernames').json()
+    userids = []
+    usernames = []
+    for user in users:
+        print(users[user]['username'])
+        print(user)
+        #usernames.append(users[str(user)]['username'])
+    userids.append(users.keys())
+    print(usernames)
+    return render_template('admin.html', users=users)
 
 
 #High Scores Table - Add Later
@@ -453,6 +432,14 @@ def chart():
         cash_labels.append(currency.date_posted)
 
     return render_template('chart.html', values=values, labels=labels, cash_values=cash_values, cash_labels=cash_labels )
+
+#About Page Route
+@app.route("/about")
+def about():
+    title = 'About'
+    return render_template('about.html', title=title)
+
+
 
 
 # create schedule for retrieving prices
