@@ -42,15 +42,12 @@ currencies = ["BTC"]
 prices = {"BTC": []}
 
 
-
+#Home page for website
 @app.route("/", methods=['POST', 'GET'])
 def index():
 
-    #if request.method == 'POST':
 
-    #    print("HEY")
-
-    return render_template("start.html")
+    return render_template("index.html")
 
 
 def retrieve_data():
@@ -120,13 +117,6 @@ def retrieve_data():
     ##pusher.trigger("crypto", "data-updated", data)
 
 
-
-@app.route("/btc")
-def btc_dash():
-#    yearly_data1('2b. high (USD)', 'BTC')
-    return render_template("individual.html", data="sdfs")
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -157,7 +147,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('start'))
+            return redirect(next_page) if next_page else redirect(url_for('index'))
         else:
             flash('Login Uncessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -371,15 +361,6 @@ def adminpanal():
     return render_template('admin.html', users=users)
 
 
-#High Scores Table - Add Later
-@app.route('/start', methods=['GET'])
-@login_required
-def start():
-    print("TEST")
-    #############API TEST WORKS################
-    #r = requests.get('http://127.0.0.1:5000/api/trades/')
-    #print(r.json())
-    return render_template('start.html')
 
 #Press Start Tv Screen
 @app.route('/pressstart', methods=['GET'])

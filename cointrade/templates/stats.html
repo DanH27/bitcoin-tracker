@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stats</title>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simulator.css')}}" />
   <style>
   @font-face {
     font-family: pix;
@@ -73,14 +73,14 @@
     <div class="tv-screen">
       <div class="inner-tv-screen">
 
-        <h1>CURRENT BITCOIN AMT: {{bitcoins}}</h1>
-        <h1>BITCOINS (BTC) VALUE: {{bit_value_formatted}}</h1>
-        <h1 id="starting/current">STARTING/CURRENT CASH: $25,000/{{current_cash}}</h1>
+        <h1><span class="orange-highlight">CURRENT BITCOIN AMT:</span> {{bitcoins}}</h1>
+        <h1><span class="orange-highlight">BITCOINS (BTC) VALUE:</span> {{bit_value_formatted}}</h1>
+        <h1 id="starting/current"><span class="orange-highlight">STARTING/CURRENT CASH:</span> $25,000/{{current_cash}}</h1>
         <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
         <div class="money">
-          <h1>MONEY</h1>
+          <h1><span class="other-highlight">MONEY</span></h1>
 
 
           {% for money in cash %}
@@ -97,7 +97,7 @@
 
 
         <div class="dates">
-          <h1>DATES</h1>
+          <h1><span class="other-highlight">DATES</span></h1>
 
 
 
@@ -111,7 +111,7 @@
         </div>
 
         <div class="btcs">
-          <h1>BITCOIN AMTs</h1>
+          <h1><span class="other-highlight">BITCOIN AMT</span></h1>
 
 
           {% for btc in btcs %}
