@@ -1,6 +1,6 @@
 # Bitcoin Tracker #
 
-8BTCoin is a 8 Bit inspired cryptocurrency trade in which you can buy or sell cryptocurrencies without using real money. As of 12/11/18 we only allow trading Bitcoins. Other coins will be added later.
+8BTCoin is a 8 Bit inspired cryptocurrency trade in which you can buy or sell cryptocurrencies without using real money. As of 12/11/18 we only allow trading Bitcoins. Other coins will be added later. This app utilizes my 8BTCoin API which can be found here: https://btc-api-heroku.herokuapp.com/ The Swagger file/api documentation can also be found in the main folder.
 
 # Getting Started #
 
@@ -17,7 +17,7 @@ Add additional notes about how to deploy this on a live system
 # Built With #
 
 Flask - Python micro framework
-This app utilizes my 8BTCoin API which can be found here: https://btc-api-heroku.herokuapp.com/
+
 
 # Authors #
 
