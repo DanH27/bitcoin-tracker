@@ -1,141 +1,155 @@
-<!-- ./templates/currencies.html -->
+<!-- ./templates/sell.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SELL</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
-    <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SELL</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simulator.css')}}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    .bg {
-      /* The image used */
-      background-image: url(/static/nestv2.png);
+  <style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: pix;
+  }
+  #dialog {
+    font-family: pix;
+    color: red;
+  }
 
-      /* Full height */
-      height: 100%;
+  .bg {
+    background-image: url(/static/nestvblue.png);
 
-      /* Center and scale the image nicely */
-      /* background-position: center; */
-      background-repeat: no-repeat;
-      background-size: cover;
+    /* Full height */
+    height: 100%;
 
-    }
+    /* Center and scale the image nicely */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
   .tv-screen {
-      background-color: #00b0fe;
-      height: 90%;
-      width: 80%;
-      position: absolute;
-      margin: 0 auto;
-      top: 50px;
-      left: 85px;
+    background-color: #3CBCFC;
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    left: 85px;
 
-    }
+  }
 
-    @font-face {
-      font-family: pix;
-      src: url(/static/NESFont.ttf);
-    }
+  @font-face {
+    font-family: pix;
+    src: url(/static/NESFont.ttf);
+  }
 
-      #cc-table {
-          margin: 0 auto;
-          width: 100%;
-      }
-      #cc-table td {
-        text-align: center;
-        padding: 10px;
-        font-family: pix;
-      }
-      #cc-table th {
-        padding-bottom: 30px;
-      }
-      .currency-row:hover {
-        color: #A81000;
-      }
-      form {
-        float: right;
-      }
-      select {
-        display: block;
-        margin-bottom: 15px;
-      }
-      table {
-        border: 10px solid #0000FC;
-        border-radius: 2%;
-      }
-      .table-form-cell {
-        display: inline-block;
+  #cc-table {
+    margin: 0 auto;
+    width: 100%;
+  }
+  #cc-table td {
+    text-align: center;
+    padding: 10px;
+    font-family: pix;
+  }
+  #cc-table th {
+    padding-bottom: 30px;
+    color: #F83800;
+  }
+  .currency-row:hover {
+    color: #A81000;
+  }
+  form {
+    float: right;
+  }
+  select {
+    display: block;
+    margin-bottom: 15px;
+  }
+  table {
+    border: 10px solid #0000FC;
+    border-radius: 2%;
+  }
+  .table-form-cell {
+    display: inline-block;
 
-      }
-      .hidden {
-        visibility: hidden;
-      }
-      .move-arrow {
-        width: 100px;
-        height: 100px;
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .move-arrow {
+    width: 100px;
+    height: 100px;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 
-      }
-      .move-arrow:hover {
-        border: 2px solid red;
-      }
+  }
+  .move-arrow:hover {
+    border: 2px solid red;
+  }
+  .inner-tv-screen {
+    padding: 20px;
+  }
 
 
 
 
-    </style>
+
+  </style>
 
 </head>
 <body>
   <div class="bg">
     <div class="tv-screen">
       <div class="inner-tv-screen">
+        <p id="dialog">
+
+        </p>
         <div class="table-background">
-            <h1>SELECT A CRYPTOCURRENCY TO SELL.</h1>
-            <h1 id="profit-loss">CURRENT PROFIT/LOSS: {{current_profit_loss}}</h1>
-            <table id="cc-table">
-              <th>
-                CURRENCY
-              </th>
-              <th>
-                AMT
-              </th>
-              <th>
-                CURRENT PRICE
-              </th>
+          <h1>SELECT A <span class="highlight-word-orange">CRYPTOCURRENCY</span> TO SELL.</h1>
+          <h1><span id="profit-loss">CASH AMT:</span> {{cash_amt_formatted}}</h1>
+          <table id="cc-table">
+            <th>
+              CURRENCY
+            </th>
+            <th>
+              AMT
+            </th>
+            <th>
+              CURRENT PRICE
+            </th>
 
-              <tr class="currency-row">
-                <td>
-                  BTC
-                  </td>
-                  <td>
-                    {{ users_currencies }}
-                    </td>
-                    <td id="current-btc-price">
-                      {{ current_prices[0]}}
+            <tr class="currency-row">
+              <td>
+                BTC
+              </td>
+              <td>
+                {{ users_currencies }}
+              </td>
+              <td id="current-btc-price">
+                {{ current_prices[0] }}
 
-                      </td>
-                      <td class="table-form-cell">
-                        <form name="text" method="POST" action="/confirmsell">
-                        <input name="sell_coins">
-                        <input type="submit" value="bitcoin" class="hidden">
-                      </form>
-                      </td>
-                </tr>
+              </td>
+              <td class="table-form-cell">
+                <form name="text" method="POST" action="/confirmsell" id="bitcoin-form">
+                  <!-- <input name="sell_coins"> -->
+                  <input id='btc-input' type="number" name="sell_coins" min="0">
+                  <button id='btc-button' type="submit" value="bitcoin" onclick="checkAMT()">SELL</button>
+                </form>
+              </td>
+            </tr>
 
 
 
 
-            </table>
+          </table>
         </div>
 
 
-    <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+        <a href="{{ url_for('menu') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
 
@@ -149,39 +163,65 @@
 
 
 
+  <script type="text/javascript">
 
-    <!-- D3.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
-    <!-- import Pusher-js library -->
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-    <script type="text/javascript">
-    if ({{current_profit_loss}} > 0) {
-      document.getElementById('profit-loss').style.color = 'green'
-    } else {
-      document.getElementById('profit-loss').style.color = 'red'
-    }
-      // // connect to Pusher
-      // const pusher = new Pusher('d0fbb6934c4ec3d8a001', {
-      //   cluster: 'us2', // gotten from Pusher app dashboard
-      //   encrypted: true // optional
-      // });
-      // // subscribe to crypto channel
-      // const channel = pusher.subscribe('crypto')
-      // // listen for relevant events
-      //
-      // channel.bind('data-updated', data => {
-      //     document.getElementById('current-btc-price').innerHTML =  "$" + data.btc_price;
-      //
-      //
-      //
-      //
-      // });
+  let errorMessage = false;
+
+   // Code is from https://codepen.io/ashimiro/pen/Lkzqo - It allows characters from the dialogs array to show up one at a time.
+     var dialogs = ['Number must be greater than 0.'],
+     initial = 0;
+     individual = dialogs[initial].split('');
 
 
-    </script>
+
+     function createDiag ( dialog ) {
+
+     for(i = 0; i < dialog.length; i++) {
+     (function(i){
+
+       setTimeout(function(){
+         $('#dialog').text($('#dialog').text() +   dialog[i]);
+         if (i == dialog.length-1 ) {
+           Mousetrap.bind('enter', function() {
+             if (dialogs[initial+1]) {
+               $('#dialog').text('');
+               initial += 1;
+               individual = dialogs[initial].split('');
+               createDiag( individual );
+             }
+           });
+         }
+       }, 50*i);
+
+     }(i));
+
+     }
+
+     }
+     document.getElementById("btc-button").addEventListener("click", function(event){
+         checkAMT()
+     });
+      function checkAMT() {
+        let btc_coin_amt = document.getElementById('btc-input').value;
+        if (btc_coin_amt <= 0 && !errorMessage) {
+          errorMessage = true;
+          createDiag( individual );
+
+        } else if(btc_coin_amt <= 0) {
+          event.preventDefault()
+        }
+        else {
+          document.getElementById("bitcoin-form").submit();
+        }
+      }
+
+
+  //Turn color of the profit and loss green or red depending on a profit or loss, respectively.
+  // if ({{current_profit_loss}} > 0) {
+  //   document.getElementById('profit-loss').style.color = 'green'
+  // } else {
+  //   document.getElementById('profit-loss').style.color = 'red'
+  // }
+  </script>
 </body>
 </html>

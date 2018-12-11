@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from cointrade.models import User
 
 
+#Create user form to register using python FlaskForm
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -25,6 +26,7 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('Email already taken.')
 
+#Create Login form to login using python FlaskForm
 class LoginForm(FlaskForm):
 
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -32,6 +34,7 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
 
+#Create update form to update account information using python FlaskForm
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
