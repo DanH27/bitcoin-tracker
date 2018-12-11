@@ -4,6 +4,8 @@
 
 # Getting Started #
 
+Clone this repo onto your local machine.
+
 # Prerequisites #
 
 Run the requirements.txt to install the correct dependencies.
@@ -15,6 +17,7 @@ Add additional notes about how to deploy this on a live system
 # Built With #
 
 Flask - Python micro framework
+This app utilizes my 8BTCoin API which can be found here: https://btc-api-heroku.herokuapp.com/
 
 # Authors #
 
