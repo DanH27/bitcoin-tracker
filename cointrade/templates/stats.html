@@ -21,7 +21,7 @@
 
   .bg {
     /* The image used */
-    background-image: url(/static/nestv2.png);
+    background-image: url(/static/nestvblue.png);
 
     /* Full height */
     height: 100%;
@@ -33,7 +33,7 @@
 
   }
 .tv-screen {
-    background-color: #00b0fe;
+    background-color: #3CBCFC;
     height: 90%;
     width: 80%;
     position: absolute;
@@ -76,7 +76,7 @@
         <h1><span class="orange-highlight">CURRENT BITCOIN AMT:</span> {{bitcoins}}</h1>
         <h1><span class="orange-highlight">BITCOINS (BTC) VALUE:</span> {{bit_value_formatted}}</h1>
         <h1 id="starting/current"><span class="orange-highlight">STARTING/CURRENT CASH:</span> $25,000/{{current_cash}}</h1>
-        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+        <a href="{{ url_for('menu') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
         <div class="money">

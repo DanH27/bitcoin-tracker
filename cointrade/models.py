@@ -3,11 +3,12 @@ from datetime import datetime
 from flask_login import UserMixin
 
 
+#Load current user
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
+#Make user model for the ORM
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +22,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+#Create currency model for the ORM
 class Currency(db.Model):
     __tablename__ = 'currency'
     id = db.Column(db.Integer, primary_key=True)

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Crypto Table</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simulator.css')}}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <style>
   body, html {
@@ -14,14 +15,14 @@
 
   .bg {
     /* NES TV IMAGE */
-    background-image: url(/static/nestv2.png);
+    background-image: url(/static/nestvblue.png);
     height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
 
   }
   .tv-screen {
-    background-color: #00b0fe;
+    background-color: #3CBCFC;
     height: 90%;
     width: 80%;
     position: absolute;
@@ -103,6 +104,9 @@
   <div class="bg">
     <div class="tv-screen">
       <div class="inner-tv-screen">
+        <p id="dialog">
+
+        </p>
         <h1 class="title is-6" id="b_price">{{bitcoinprice}}</h1>
         <h1><span class="cash-heading">CASH:</span> {{cash_amt_formatted}}</h1>
         <div class="table-background">
@@ -131,16 +135,17 @@
                 {{btc_amt}}
               </td>
               <td class="table-form-cell">
-                <form name="text" method="POST" action="/buy">
-                  <input name="buy_coins">
-                  <input type="submit" value="bitcoin" class="hidden">
+                <form name="text" method="POST" action="/buy" id="bitcoin-form">
+                  <input id='btc-input' type="number" name="buy_coins" min="0">
+                  <!-- <input name="buy_coins"> -->
+                  <button id='btc-button' type="submit" value="bitcoin" onclick="checkAMT()">BUY</button>
                 </form>
               </td>
             </tr>
 
 </table>
 </div>
-<a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+<a href="{{ url_for('menu') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
 
@@ -151,6 +156,57 @@
 
 
 </div>
+<script>
+let errorMessage = false;
 
+ // Code is from https://codepen.io/ashimiro/pen/Lkzqo - It allows characters from the dialogs array to show up one at a time.
+   var dialogs = ['Must be an integer greater than 0.'],
+   initial = 0;
+   individual = dialogs[initial].split('');
+
+
+
+   function createDiag ( dialog ) {
+
+   for(i = 0; i < dialog.length; i++) {
+   (function(i){
+
+     setTimeout(function(){
+       $('#dialog').text($('#dialog').text() +   dialog[i]);
+       if (i == dialog.length-1 ) {
+         Mousetrap.bind('enter', function() {
+           if (dialogs[initial+1]) {
+             $('#dialog').text('');
+             initial += 1;
+             individual = dialogs[initial].split('');
+             createDiag( individual );
+           }
+         });
+       }
+     }, 50*i);
+
+   }(i));
+
+   }
+
+   }
+   document.getElementById("btc-button").addEventListener("click", function(event){
+       checkAMT()
+   });
+    function checkAMT() {
+      let btc_coin_amt = document.getElementById('btc-input').value;
+      if (btc_coin_amt <= 0 && !errorMessage) {
+        errorMessage = true;
+        createDiag( individual );
+
+      } else if(btc_coin_amt <= 0) {
+        event.preventDefault()
+      }
+      else {
+        document.getElementById("bitcoin-form").submit();
+      }
+    }
+
+</script>
 </body>
 </html>

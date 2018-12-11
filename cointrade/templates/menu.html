@@ -1,9 +1,8 @@
-<!-- ./templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CryptoLiveChart!</title>
+  <title>Menu</title>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"> -->
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> -->
   <style>
@@ -20,7 +19,7 @@
 
   .bg {
     /* The image used */
-    background-image: url(/static/nestv2.png);
+    background-image: url(/static/nestvblue.png);
 
     /* Full height */
     height: 100%;
@@ -39,7 +38,7 @@
     color: white;
   }
   .tv-screen {
-    background-color: #00b0fe;
+    background-color: #3CBCFC;
     height: 90%;
     width: 80%;
     position: absolute;
@@ -80,6 +79,9 @@
     left: 40%;
     top: 40%;
   }
+  .button-text:hover {
+    color: #F83800;
+  }
 
   </style>
 </head>
@@ -89,28 +91,28 @@
       <div class="inner-tv-screen">
 
         <div class="menu-buttons" id="buy-button">
-          <a href="{{ url_for('ctable')}}"><img src="/static/buycoins.gif" id="game-logo"/></a>
+          <a href="{{ url_for('ctable')}}"><img src="/static/buycoins1.png" id="game-logo"/></a>
           <h2 class="button-text">BUY</h2>
         </div>
 
         <div class="menu-buttons" id="sell-button">
-          <a href="{{ url_for('sellcoins')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <a href="{{ url_for('sellcoins')}}"><img src="/static/buycoins1.png" id="game-logo"/></a>
           <h2 class="button-text">SELL</h2>
         </div>
 
         <div class="menu-buttons" id="stats-button">
-          <a href="{{ url_for('stats')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <a href="{{ url_for('stats')}}"><img src="/static/buycoins1.png" id="game-logo"/></a>
           <h2 class="button-text">STATS</h2>
         </div>
 
 
         <div class="menu-buttons" id="chart-button">
-          <a href="{{ url_for('chart')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <a href="{{ url_for('chart')}}"><img src="/static/buycoins1.png" id="game-logo"/></a>
           <h2 class="button-text">CHART</h2>
         </div>
 
         <div class="menu-buttons" id="logout-button">
-          <a href="{{ url_for('logout')}}"><img src="/static/sellcoins.gif" id="game-logo"/></a>
+          <a href="{{ url_for('logout')}}"><img src="/static/buycoins1.png" id="game-logo"/></a>
           <h2 class="button-text">LOGOUT</h2>
         </div>
 

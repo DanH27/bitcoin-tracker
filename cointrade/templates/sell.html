@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SELL</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simulator.css')}}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <style>
   body, html {
@@ -12,9 +13,13 @@
     margin: 0;
     font-family: pix;
   }
+  #dialog {
+    font-family: pix;
+    color: red;
+  }
 
   .bg {
-    background-image: url(/static/nestv2.png);
+    background-image: url(/static/nestvblue.png);
 
     /* Full height */
     height: 100%;
@@ -26,7 +31,7 @@
 
   }
   .tv-screen {
-    background-color: #00b0fe;
+    background-color: #3CBCFC;
     height: 90%;
     width: 80%;
     position: absolute;
@@ -100,9 +105,12 @@
   <div class="bg">
     <div class="tv-screen">
       <div class="inner-tv-screen">
+        <p id="dialog">
+
+        </p>
         <div class="table-background">
           <h1>SELECT A <span class="highlight-word-orange">CRYPTOCURRENCY</span> TO SELL.</h1>
-          <h1><span id="profit-loss">CURRENT PROFIT/LOSS:</span> {{current_profit_loss}}</h1>
+          <h1><span id="profit-loss">CASH AMT:</span> {{cash_amt_formatted}}</h1>
           <table id="cc-table">
             <th>
               CURRENCY
@@ -126,9 +134,10 @@
 
               </td>
               <td class="table-form-cell">
-                <form name="text" method="POST" action="/confirmsell">
-                  <input name="sell_coins">
-                  <input type="submit" value="bitcoin" class="hidden">
+                <form name="text" method="POST" action="/confirmsell" id="bitcoin-form">
+                  <!-- <input name="sell_coins"> -->
+                  <input id='btc-input' type="number" name="sell_coins" min="0">
+                  <button id='btc-button' type="submit" value="bitcoin" onclick="checkAMT()">SELL</button>
                 </form>
               </td>
             </tr>
@@ -140,7 +149,7 @@
         </div>
 
 
-        <a href="{{ url_for('main') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
+        <a href="{{ url_for('menu') }}"><img class="move-arrow" src="/static/move-arrow.png" /></a>
 
 
 
@@ -155,12 +164,64 @@
 
 
   <script type="text/javascript">
+
+  let errorMessage = false;
+
+   // Code is from https://codepen.io/ashimiro/pen/Lkzqo - It allows characters from the dialogs array to show up one at a time.
+     var dialogs = ['Number must be greater than 0.'],
+     initial = 0;
+     individual = dialogs[initial].split('');
+
+
+
+     function createDiag ( dialog ) {
+
+     for(i = 0; i < dialog.length; i++) {
+     (function(i){
+
+       setTimeout(function(){
+         $('#dialog').text($('#dialog').text() +   dialog[i]);
+         if (i == dialog.length-1 ) {
+           Mousetrap.bind('enter', function() {
+             if (dialogs[initial+1]) {
+               $('#dialog').text('');
+               initial += 1;
+               individual = dialogs[initial].split('');
+               createDiag( individual );
+             }
+           });
+         }
+       }, 50*i);
+
+     }(i));
+
+     }
+
+     }
+     document.getElementById("btc-button").addEventListener("click", function(event){
+         checkAMT()
+     });
+      function checkAMT() {
+        let btc_coin_amt = document.getElementById('btc-input').value;
+        if (btc_coin_amt <= 0 && !errorMessage) {
+          errorMessage = true;
+          createDiag( individual );
+
+        } else if(btc_coin_amt <= 0) {
+          event.preventDefault()
+        }
+        else {
+          document.getElementById("bitcoin-form").submit();
+        }
+      }
+
+
   //Turn color of the profit and loss green or red depending on a profit or loss, respectively.
-  if ({{current_profit_loss}} > 0) {
-    document.getElementById('profit-loss').style.color = 'green'
-  } else {
-    document.getElementById('profit-loss').style.color = 'red'
-  }
+  // if ({{current_profit_loss}} > 0) {
+  //   document.getElementById('profit-loss').style.color = 'green'
+  // } else {
+  //   document.getElementById('profit-loss').style.color = 'red'
+  // }
   </script>
 </body>
 </html>
