@@ -221,6 +221,7 @@ def sellcoins():
 @app.route('/confirmsell', methods=['POST', 'GET'])
 @login_required
 def confirmsell():
+    
     #If user submits the sell coins form
     if 'sell_coins' in request.form:
 
