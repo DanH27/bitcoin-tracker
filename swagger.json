@@ -1,0 +1,185 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Documentation for the 8BTCoin API",
+    "version" : "1.0.0",
+    "title" : "8BTCoin API",
+    "contact" : {
+      "email" : "admin@8btcoin.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "www.8btcoin.com",
+  "basePath" : "/v1",
+  "tags" : [ {
+    "name" : "user",
+    "description" : "Endpoint for getting user info"
+  }, {
+    "name" : "trades",
+    "description" : "Endpoint for getting trade info"
+  }, {
+    "name" : "cash",
+    "description" : "Endpoint for getting cash info"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/bitcoins" : {
+      "get" : {
+        "tags" : [ "trades" ],
+        "summary" : "Returns all bitcoin trades using userID",
+        "description" : "Returns json list of all the bitcoin trades of all users.",
+        "operationId" : "getTrades",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns all bitcoin trades"
+          }
+        }
+      }
+    },
+    "/api/bitcoins/{id}" : {
+      "get" : {
+        "tags" : [ "trades" ],
+        "summary" : "Get bitcoin amount of a user by their user id",
+        "description" : "Get a user's bitcoin amount",
+        "operationId" : "getTradesByuserId",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of any user with an account",
+          "required" : true,
+          "type" : "integer",
+          "maximum" : 10,
+          "minimum" : 1,
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid userId"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/api/users" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get all users.",
+        "description" : "Get all users in the database.",
+        "operationId" : "getUsers",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "All users retrieved. "
+          },
+          "404" : {
+            "description" : "Users not found."
+          }
+        }
+      }
+    },
+    "/api/user/{id}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get user by user id",
+        "description" : "",
+        "operationId" : "getUserById",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the user that needs to be fetched. ",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid id"
+          },
+          "404" : {
+            "description" : "User Does not exist"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete user",
+        "description" : "Delete a user from the data base.",
+        "operationId" : "deleteUser",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id that needs to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Not a valid user id"
+          },
+          "404" : {
+            "description" : "Id not found"
+          }
+        }
+      }
+    },
+    "/api/cash" : {
+      "get" : {
+        "tags" : [ "cash" ],
+        "summary" : "Get all cash",
+        "description" : "Get all users cash from the database.",
+        "operationId" : "getCash",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "All users cash retrieved. "
+          },
+          "404" : {
+            "description" : "Users cash not found."
+          }
+        }
+      }
+    },
+    "/api/cash/{id}" : {
+      "get" : {
+        "tags" : [ "cash" ],
+        "summary" : "Get users cash by user id",
+        "description" : "",
+        "operationId" : "getUserCashById",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the user that needs to be fetched. ",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid id"
+          },
+          "404" : {
+            "description" : "User Does not exist"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : { }
+}
